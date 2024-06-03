@@ -1,0 +1,17 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Traits\AttributeTrait;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * @mixin Builder
+ */
+class {{ class }} extends Model
+{
+    use AttributeTrait;
+    use HasFactory;
+}

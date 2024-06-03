@@ -1,0 +1,19 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Traits\ResourceTrait;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class {{ class }} extends JsonResource
+{
+    use ResourceTrait;
+
+    /**
+     * @return object
+     */
+    public function toObject(): object
+    {
+        return $this->entry;
+    }
+}

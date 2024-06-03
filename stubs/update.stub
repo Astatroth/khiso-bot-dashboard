@@ -1,0 +1,20 @@
+<?php
+
+return new class
+{
+    /**
+     * Run the update.
+     */
+    public function run(): void
+    {
+        //
+    }
+
+    /**
+     * Roll back the update.
+     */
+    public function rollBack(): void
+    {
+        //
+    }
+};

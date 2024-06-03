@@ -1,0 +1,44 @@
+@import "bootstrap";
+
+html, body {
+    &.auth-login {
+        font-family: Ubuntu, sans-serif;
+        font-size: 14px;
+    }
+}
+
+// Auth
+.login-box {
+    .card-body {
+        background-color: #fff;
+        border-top: 0;
+        color: #666;
+        padding: 20px;
+    }
+    input {
+        border-right: 0;
+    }
+    .input-group-text {
+        background-color: transparent;
+        color: #777;
+        border-color: rgba(0, 0, 0, .07);
+        &.input-group-text-append {
+            border-left: 0;
+        }
+    }
+}
+
+// Misc
+h5.hl {
+    font-size: 13px;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #b1b9bd;
+    line-height: .1em;
+    margin: 20px 0;
+    span {
+        background: #fff;
+        padding: 0 10px;
+        color: #8f979b;
+    }
+}

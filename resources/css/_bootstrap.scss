@@ -1,0 +1,15 @@
+@import "partials/buttons";
+@import "partials/forms";
+
+@import "mixins/font-face";
+
+@font-face {
+    font-family: 'Ubuntu';
+    src:  url('../fonts/Ubuntu-Regular.eot?cu006i');
+    src:  url('../fonts/Ubuntu-Regular.eot?cu006i#iefix') format('embedded-opentype'),
+    url('../fonts/Ubuntu-Regular.ttf?cu006i') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@import 'toastr';
