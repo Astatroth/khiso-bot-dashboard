@@ -7,7 +7,7 @@ use App\DTOs\SeoValidatedDTO;
 use App\Models\Seo;
 use App\Traits\DynamicTableTrait;
 use App\Traits\MediaTrait;
-use App\Traits\ServiceTrait;
+use App\Traits\SearchByAttributesTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -15,7 +15,7 @@ class SeoService
 {
     use DynamicTableTrait;
     use MediaTrait;
-    use ServiceTrait;
+    use SearchByAttributesTrait;
 
     /**
      * @var string

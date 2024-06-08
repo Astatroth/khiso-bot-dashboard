@@ -33,5 +33,6 @@ return [
             'Use file manager',
             'Manage content'
         ],
+        'Student' => []
     ]
 ];

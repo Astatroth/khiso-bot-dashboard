@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\PageDeletedEvent;
+use App\Events\PageSavedEvent;
+use App\Listeners\EntityDeletedEventListener;
+use App\Listeners\EntitySavedEventListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -15,9 +19,12 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
+        PageDeletedEvent::class => [
+            EntityDeletedEventListener::class
         ],
+        PageSavedEvent::class => [
+            EntitySavedEventListener::class
+        ]
     ];
 
     /**

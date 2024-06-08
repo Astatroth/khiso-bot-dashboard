@@ -1,0 +1,101 @@
+@import "bootstrap";
+
+html, body {
+    &.dashboard {
+        font-family: Ubuntu, sans-serif;
+        font-size: 14px;
+    }
+}
+.shortcut-action__icon {
+    cursor: pointer;
+    width: 1.5rem;
+    height: 1.5rem;
+    vertical-align: .15rem;
+    i {
+        font-size: 16px;
+    }
+}
+.shortcut-action__message {
+    display: inline-block;
+    padding: calc(0.5 * .5rem) 1rem calc(0.5 * .5rem) 0;
+    transition: all .2s ease-out;
+    transform: translateY(calc(-1 * .5rem));
+    vertical-align: top;
+    opacity: 0;
+    font-size: .889rem;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.shortcut-action__icon:hover+.shortcut-action__message,
+.shortcut-action__icon:focus+.shortcut-action__message {
+    -webkit-transform: translateY(-2px);
+    transform: translateY(-2px);
+    opacity: 1;
+}
+a {
+    text-decoration: none;
+}
+#language-switcher {
+    .dropdown-item {
+        a {
+            text-decoration: none;
+        }
+    }
+}
+.select2-container {
+    width: 100%!important;
+}
+.select2-container--default .select2-selection--single, .select2-container--default .select2-selection--multiple {
+    border-radius: 3px;
+    height: 33px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 32px;
+}
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple,
+.select2-dropdown {
+    border-color: rgba(0, 0, 0, .07);
+}
+.select2-container--default .select2-selection--multiple {
+    .select2-selection__rendered {
+        line-height: 24px;
+    }
+    .select2-search__field {
+        margin-top: 3px;
+    }
+    .select2-selection__choice {
+        margin-top: 3px;
+    }
+}
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: rgba(0, 0, 0, .07);
+}
+.current-view--container {
+    img {
+        cursor: pointer;
+    }
+}
+.dynamic-table-wrapper {
+    .row-container {
+        display: flex; /* Enable flexbox layout */
+        align-items: center; /* Align items vertically */
+    }
+
+    .image-wrapper {
+        flex: 0 0 100px; /* Set fixed width for images */
+        margin-right: 20px; /* Add margin between image and text */
+    }
+
+    .image {
+        max-height: 35%; /* Maintain aspect ratio and prevent stretching */
+        height: auto;
+    }
+
+    .text-wrapper {
+        flex: 1; /* Allow text to expand */
+    }
+}
+img[data-fancybox] {
+    cursor: pointer;
+}

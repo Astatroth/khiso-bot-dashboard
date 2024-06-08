@@ -284,11 +284,7 @@ function performLfmRequest(url, parameter, type) {
 }
 
 function displayErrorResponse(jqXHR) {
-  var message = JSON.parse(jqXHR.responseText)
-  if (Array.isArray(message)) {
-    message = message.join('<br>')
-  }
-  notify('<div style="max-height:50vh;overflow: auto;">' + message + '</div>');
+  notify('<div style="max-height:50vh;overflow: scroll;">' + jqXHR.responseText + '</div>');
 }
 
 var refreshFoldersAndItems = function (data) {
@@ -483,7 +479,6 @@ function loadItems(page) {
       $('#nav-buttons > ul').removeClass('d-none');
 
       $('#working_dir').val(working_dir);
-      console.log('Current working_dir : ' + working_dir);
       var breadcrumbs = [];
       var validSegments = working_dir.split('/').filter(function (e) { return e; });
       validSegments.forEach(function (segment, index) {
@@ -544,7 +539,7 @@ function rename(item) {
 }
 
 function trash(items) {
-  confirm(lang['message-delete'], function () {
+  notify(lang['message-delete'], function () {
     performLfmRequest('delete', {
       items: items.map(function (item) { return item.name; })
     }).done(refreshFoldersAndItems)
@@ -719,7 +714,7 @@ function use(items) {
     window.opener.SetUrl(p,w,h);
   }
 
-  var url = items[0].url;
+  var url = items[0].url.replace(location.protocol + '//' + location.host, '');
   var callback = getUrlParam('callback');
   var useFileSucceeded = true;
 
@@ -798,14 +793,10 @@ function notImp() {
   notify('Not yet implemented!');
 }
 
-function notify(body) {
+function notify(body, callback) {
+  $('#notify').find('.btn-primary').toggle(callback !== undefined);
+  $('#notify').find('.btn-primary').unbind().click(callback);
   $('#notify').modal('show').find('.modal-body').html(body);
-}
-
-function confirm(body, callback) {
-  $('#confirm').find('.btn-primary').toggle(callback !== undefined);
-  $('#confirm').find('.btn-primary').click(callback);
-  $('#confirm').modal('show').find('.modal-body').html(body);
 }
 
 function dialog(title, value, callback) {

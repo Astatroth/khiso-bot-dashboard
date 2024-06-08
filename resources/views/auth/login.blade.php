@@ -9,7 +9,7 @@
         </div>
         <x-card.card>
             <x-slot:body>
-                <x-form.form :action="route('login.submit')">
+                <x-form.form :action="route('login.submit')" method="post">
                     <input type="hidden" name="intended" value="{{ old('intended') ?: $intended }}">
 
                     <div class="invisible-recaptcha"></div>

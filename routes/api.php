@@ -1,6 +1,13 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\ConfirmationCodeController;
+use App\Http\Controllers\Api\DistrictController;
+use App\Http\Controllers\Api\InstitutionController;
+use App\Http\Controllers\Api\RegionController;
+use App\Http\Controllers\Api\StudentController;
+use App\Http\Controllers\Api\TelegramChannelController;
+use App\Http\Middleware\LocalizeApiRequest;
+use App\Http\Middleware\VerifyAccessToken;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +21,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(VerifyAccessToken::class)->prefix('v1')->group(function () {
+
+    Route::prefix('students')->controller(StudentController::class)->group(function () {
+        Route::get('/{chatId}', 'find')->whereNumber('chatId');
+        Route::put('/create', 'create');
+    });
+
+    Route::get('/channels', [TelegramChannelController::class, 'get']);
+
+    Route::get('/regions', [RegionController::class, 'get']);
+
+    Route::get('/districts', [DistrictController::class, 'get']);
+
+    Route::get('/institutions', [InstitutionController::class, 'get']);
+
+    Route::middleware(LocalizeApiRequest::class)->group(function () {
+        Route::prefix('code')->controller(ConfirmationCodeController::class)->group(function () {
+            Route::post('/send', 'send');
+            Route::post('/verify', 'verify');
+        });
+    });
 });

@@ -8,12 +8,6 @@
             </li>
         </ul>
         <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-                <a href="{{ route('home') }}" class="nav-link" target="_blank">
-                    <i class="fa-duotone fa-fw fa-home"></i>
-                    {{ __('To site') }}
-                </a>
-            </li>
             @if (count(LaravelLocalization::getSupportedLocales()) > 1)
                 <!-- Language selector -->
                 <li class="nav-item dropdown">
