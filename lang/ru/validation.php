@@ -13,7 +13,7 @@ return array (
   'ascii' => ':attribute должен содержать только однобайтовые буквенно-цифровые символы и символы.',
   'before' => ':attribute должен быть датой перед :date.',
   'before_or_equal' => ':attribute должен быть датой, предшествующей :date или равной ей.',
-  'between' => 
+  'between' =>
   array (
     'array' => ':attribute должен содержать элементы от :min до :max.',
     'file' => 'Размер :attribute должен находиться в диапазоне от :min до :max килобайт.',
@@ -42,14 +42,14 @@ return array (
   'exists' => 'Выбранный :attribute недействителен.',
   'file' => ':attribute должен быть файлом.',
   'filled' => 'Поле :attribute должно иметь значение.',
-  'gt' => 
+  'gt' =>
   array (
     'array' => 'В :attribute должно быть более :value элементов.',
     'file' => 'Размер :attribute должен превышать :value килобайт.',
     'numeric' => ':attribute должен быть больше, чем :value.',
     'string' => ':attribute должен содержать больше символов :value.',
   ),
-  'gte' => 
+  'gte' =>
   array (
     'array' => ':attribute должен содержать элементы :value или более.',
     'file' => ':attribute должен быть больше или равен :value килобайтам.',
@@ -65,14 +65,14 @@ return array (
   'ipv6' => ':attribute должен быть действительным адресом IPv6.',
   'json' => ':attribute должен быть допустимой строкой JSON.',
   'lowercase' => ':attribute должен быть в нижнем регистре.',
-  'lt' => 
+  'lt' =>
   array (
     'array' => 'В :attribute должно быть меньше элементов :value.',
     'file' => 'Размер :attribute должен быть меньше :value килобайт.',
     'numeric' => ':attribute должен быть меньше :value.',
     'string' => ':attribute должен содержать меньше символов :value.',
   ),
-  'lte' => 
+  'lte' =>
   array (
     'array' => 'В :attribute не должно быть более :value элементов.',
     'file' => ':attribute должен быть меньше или равен :value килобайтам.',
@@ -80,7 +80,7 @@ return array (
     'string' => ':attribute должен быть меньше или равен символам :value.',
   ),
   'mac_address' => ':attribute должен быть действительным MAC-адресом.',
-  'max' => 
+  'max' =>
   array (
     'array' => 'В :attribute не должно быть более :max элементов.',
     'file' => 'Размер :attribute не должен превышать :max килобайт.',
@@ -90,7 +90,7 @@ return array (
   'max_digits' => ':attribute не должен содержать более :max цифр.',
   'mimes' => ':attribute должен быть файлом типа: :values.',
   'mimetypes' => ':attribute должен быть файлом типа: :values.',
-  'min' => 
+  'min' =>
   array (
     'array' => 'В :attribute должно быть не менее :min элементов.',
     'file' => 'Размер :attribute должен быть не менее :min килобайт.',
@@ -107,7 +107,7 @@ return array (
   'not_in' => 'Выбранный :attribute недействителен.',
   'not_regex' => 'Формат :attribute недействителен.',
   'numeric' => ':attribute должен быть числом.',
-  'password' => 
+  'password' =>
   array (
     'letters' => ':attribute должен содержать хотя бы одну букву.',
     'mixed' => ':attribute должен содержать хотя бы одну прописную и одну строчную букву.',
@@ -131,7 +131,7 @@ return array (
   'required_without' => 'Поле :attribute является обязательным, если :values отсутствует.',
   'required_without_all' => 'Поле :attribute является обязательным, если ни одно из :values не присутствует.',
   'same' => ':attribute и :other должны совпадать.',
-  'size' => 
+  'size' =>
   array (
     'array' => ':attribute должен содержать элементы :size.',
     'file' => 'Размер :attribute должен быть :size килобайт.',
@@ -148,22 +148,22 @@ return array (
   'ulid' => ':attribute должен быть действительным ULID.',
   'uuid' => ':attribute должен быть допустимым UUID.',
   'recaptcha' => 'Ошибка проверки reCAPTCHA.',
-  'custom' => 
-  array (
-    'language' => 
-    array (
-      'supported-locale' => 'Указанный язык не поддерживается.',
-    ),
-  ),
-  'attributes' => 
-  array (
-    'roles' => 'Роли',
-    'password' => 'Пароль',
-    'slug' => 'Машинное имя',
-    'link_label' => 'Текст ссылки',
-    'parent_link_id' => 'Родительская ссылка',
-    'name' => 'Имя',
-    'title' => 'Название',
-    'username' => 'Имя пользователя',
-  ),
+  'custom' =>
+      array (
+        'language' =>
+            array (
+              'supported-locale' => 'Указанный язык не поддерживается.',
+            ),
+      ),
+  'attributes' =>
+      array (
+        'roles' => 'Роли',
+        'password' => 'Пароль',
+        'slug' => 'Машинное имя',
+        'link_label' => 'Текст ссылки',
+        'parent_link_id' => 'Родительская ссылка',
+        'name' => 'Имя',
+        'title' => 'Название',
+        'username' => 'Имя пользователя',
+      ),
 );

@@ -57,16 +57,6 @@
                                         </textarea>
                                     </div>
                                 </div>
-
-                                <div class="form-group row">
-                                    <x-form.label for="url" class="col-md-3">
-                                        {{ __('URL') }}
-                                    </x-form.label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="url" class="form-control" id="url"
-                                               value="{{ old('url') ?? $entry?->url }}" maxlength="255">
-                                    </div>
-                                </div>
                             </div>
 
                             <!-- Media -->
@@ -124,7 +114,7 @@
                                                                    id="media-{{ $index + 1 }}"
                                                                    class="form-control m-input"
                                                                    placeholder="https://..."
-                                                                   autocomplete="off">
+                                                                   autocomplete="off" value="{{ $media->media_url }}">
                                                         </div>
                                                         @if ($loop->first)
                                                             <div class="button-control d-flex" style="width: 300px; height: 33px;">

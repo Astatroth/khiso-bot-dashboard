@@ -2,6 +2,9 @@
 
 namespace App\DTOs\News;
 
+use App\Models\NewsMedia;
+use App\Rules\MediaTypeUrl;
+use App\Rules\UrlScheme;
 use WendellAdriel\ValidatedDTO\ValidatedDTO;
 
 class NewsValidatedDTO extends ValidatedDTO
@@ -12,8 +15,10 @@ class NewsValidatedDTO extends ValidatedDTO
             'id' => 'sometimes|integer|exists:news,id',
             'title' => 'required|string|max:255',
             'description' => 'required',
-            'url' => 'nullable|url',
-            'media' => 'nullable|array'
+            'media' => ['nullable', 'array', new UrlScheme('src'), new MediaTypeUrl([
+                'photo' => NewsMedia::TYPE_PHOTO,
+                'video' => NewsMedia::TYPE_VIDEO
+            ])]
         ];
 
         // TODO: добавить проверку соответствия типа и ссылки

@@ -53,17 +53,13 @@ class NewsController extends Controller
 
     /**
      * @param int|null $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function showForm(int $id = null)
     {
         $entry = $this->service->find($id);
 
         $this->ensureEntityExists($id, $entry);
-
-        if (!$entry->actionsAllowed) {
-            $this->error(__('You cannot edit the article which has status other than "Queued" or "Failed"'));
-        }
 
         $this->title(
             is_null($id) ? __('Adding a post') : __('Editing a post')
@@ -72,6 +68,13 @@ class NewsController extends Controller
         $this->view('dashboard.news.edit');
 
         $entry = $entry ? (new NewsDTO())->transform($entry) : null;
+
+        if (!is_null($entry) && $entry->actionsAllowed === false) {
+            $this->error(__('You cannot edit the article which has status other than "Queued" or "Failed"'));
+
+            return redirect()->route('admin.news.list');
+        }
+
         $typePhoto = $this->service->getType('photo');
         $typeVideo = $this->service->getType('video');
 
