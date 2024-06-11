@@ -54,7 +54,7 @@ class TelegramChannelController extends Controller
      */
     public function showForm(int $id = null)
     {
-        $entry = $this->service->setSearchCriteria(['id' => $id])->find();
+        $entry = $this->service->find($id);
 
         $this->ensureEntityExists($id, $entry);
 

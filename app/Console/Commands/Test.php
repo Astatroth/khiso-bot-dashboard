@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Post;
 use App\Services\SmsService;
 use Illuminate\Console\Command;
 
@@ -26,6 +27,7 @@ class Test extends Command
      */
     public function handle()
     {
-        (new SmsService())->sendMessage('998909103622', 'Test message from Khiso Bot LC');
+        $post = Post::with('postable')->where('id', 4)->first();
+        dd($post->postable::STATUS_SENT);
     }
 }

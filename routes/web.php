@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArtisanController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\SeoController;
 use App\Http\Controllers\ShortcutController;
 use App\Http\Controllers\TelegramChannelController;
@@ -109,10 +110,31 @@ Route::prefix(LaravelLocalization::setLocale())->middleware('localeSessionRedire
 
                   });
 
+             /*
+              * Channels
+              */
              Route::prefix('channels')
                   ->name('channels.')
                   ->middleware('permission:manage_settings')
                   ->controller(TelegramChannelController::class)
+                  ->group(function () {
+
+                      Route::get('/', 'showList')->name('list');
+                      Route::get('/add', 'showForm')->name('add');
+                      Route::get('/{id}/edit', 'showForm')->whereNumber('id')->name('edit');
+
+                      Route::post('/load', 'ajaxLoadList')->name('load');
+                      Route::post('/save', 'save')->name('save');
+                      Route::post('/delete', 'ajaxDelete')->name('delete');
+                  });
+
+             /*
+              * News
+              */
+             Route::prefix('news')
+                  ->name('news.')
+                  ->middleware('permission:manage_content')
+                  ->controller(NewsController::class)
                   ->group(function () {
 
                       Route::get('/', 'showList')->name('list');

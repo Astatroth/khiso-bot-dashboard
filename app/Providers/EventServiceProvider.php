@@ -2,14 +2,15 @@
 
 namespace App\Providers;
 
-use App\Events\PageDeletedEvent;
-use App\Events\PageSavedEvent;
-use App\Listeners\EntityDeletedEventListener;
-use App\Listeners\EntitySavedEventListener;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use App\Events\MessageDispatchEvent;
+use App\Events\MessageFailedEvent;
+use App\Events\MessageSentEvent;
+use App\Events\NewsSavedEvent;
+use App\Listeners\MessageDispatchEventListener;
+use App\Listeners\MessageFailedEventListener;
+use App\Listeners\MessageSentEventListener;
+use App\Listeners\NewsSavedEventListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -19,11 +20,17 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        PageDeletedEvent::class => [
-            EntityDeletedEventListener::class
+        NewsSavedEvent::class => [
+            NewsSavedEventListener::class
         ],
-        PageSavedEvent::class => [
-            EntitySavedEventListener::class
+        MessageDispatchEvent::class => [
+            MessageDispatchEventListener::class
+        ],
+        MessageSentEvent::class => [
+            MessageSentEventListener::class
+        ],
+        MessageFailedEvent::class => [
+            MessageFailedEventListener::class
         ]
     ];
 

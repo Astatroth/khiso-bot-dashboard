@@ -16,6 +16,7 @@
         "laravel/ui": "^4.5",
         "mcamara/laravel-localization": "^2.0",
         "propaganistas/laravel-phone": "^5.2",
+        "telegram-bot/api": "^2.5",
         "unisharp/laravel-filemanager": "^2.9",
         "wendelladriel/laravel-validated-dto": "^3.5"
     },

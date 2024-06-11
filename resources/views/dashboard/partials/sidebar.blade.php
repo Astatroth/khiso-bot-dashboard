@@ -14,7 +14,7 @@
                     {{ __('Dashboard') }}
                 </x-dashboard-menu.single-item>
 
-                @permission(['manage_settings'])
+                @permission(['manage_settings', 'manage_content'])
                 <x-dashboard-menu.header>
                     Telegram
                 </x-dashboard-menu.header>
@@ -23,6 +23,13 @@
                                               :iconStyle="'fa-brands'"
                                               :routes="'admin.channels.list'">
                     {{ __('Channels') }}
+                </x-dashboard-menu.single-item>
+                @endpermission
+                @permission(['manage_content'])
+                <x-dashboard-menu.single-item :route="route('admin.news.list')" :iconClass="'fa-newspaper'"
+                                              :iconStyle="'fa-duotone'"
+                                              :routes="'admin.news.list'">
+                    {{ __('News') }}
                 </x-dashboard-menu.single-item>
                 @endpermission
                 @endpermission

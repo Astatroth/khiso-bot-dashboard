@@ -38,6 +38,15 @@ class TelegramChannelService
     }
 
     /**
+     * @param int|null $id
+     * @return TelegramChannel|null
+     */
+    public function find(?int $id): ?TelegramChannel
+    {
+        return TelegramChannel::find($id);
+    }
+
+    /**
      * @return \Illuminate\Support\Collection
      */
     public function getChannels(): \Illuminate\Support\Collection
