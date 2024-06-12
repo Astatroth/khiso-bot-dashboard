@@ -118,7 +118,7 @@ class MessageService
      * @param string $content
      * @return string
      */
-    protected function sanitizeContent(string $content): string
+    public function sanitizeContent(string $content): string
     {
         $content = str_replace('<br>', "\r\n\r\n", $content);
         $content = str_replace('&nbsp;', " ", $content);

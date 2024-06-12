@@ -53,21 +53,16 @@ class Olympiad extends Model implements HasInlineReplyMarkupInterface, HasAdjust
      */
     public function inlineMarkup(): array|null
     {
-        if ($this->status === self::STATUS_CREATED) {
+        if ($this->status === self::STATUS_STARTED) {
             return [
-                'text' => __('Sign up to participate'),
-                'callback_data' => "signup_{$this->id}"
+                'text' => __('Start'),
+                'callback_data' => "start_{$this->id}"
             ];
         }
 
         if ($this->status === self::STATUS_ENDED) {
             return null;
         }
-
-        return [
-            'text' => __('Start'),
-            'callback_data' => "start_{$this->id}"
-        ];
     }
 
     /**
@@ -116,6 +111,14 @@ class Olympiad extends Model implements HasInlineReplyMarkupInterface, HasAdjust
     public function questions(): HasMany
     {
         return $this->hasMany(Question::class, 'olympiad_id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function results(): HasMany
+    {
+        return $this->hasMany(OlympiadResult::class, 'olympiad_id');
     }
 
     /*

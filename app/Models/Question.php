@@ -7,6 +7,7 @@ use App\Traits\AttributeTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use TelegramBot\Api\Types\Inline\InlineKeyboardMarkup;
 
@@ -53,5 +54,13 @@ class Question extends Model implements HasInlineReplyMarkupInterface
     public function answers(): HasMany
     {
         return $this->hasMany(Answer::class, 'question_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function olympiad(): BelongsTo
+    {
+        return $this->belongsTo(Olympiad::class, 'olympiad_id');
     }
 }

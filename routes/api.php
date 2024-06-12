@@ -45,6 +45,9 @@ Route::middleware(VerifyAccessToken::class)->prefix('v1')->group(function () {
 
         Route::prefix('olympiad')->controller(OlympiadController::class)->group(function () {
             Route::put('/sign-up', 'signUp');
+            Route::put('/start', 'start');
+            Route::get("/{olympiad_id}/student/{student_id}/question/{number}", 'getQuestion');
+            Route::put('/answer', 'registerAnswer');
         });
     });
 });

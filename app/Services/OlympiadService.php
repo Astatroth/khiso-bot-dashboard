@@ -3,10 +3,12 @@
 namespace App\Services;
 
 use App\DTOs\Olympiad\OlympiadDTO;
+use App\DTOs\Olympiad\OlympiadResultDTO;
 use App\DTOs\Olympiad\OlympiadValidatedDTO;
 use App\Events\OlympiadEndedEvent;
 use App\Events\OlympiadStartedEvent;
 use App\Models\Olympiad;
+use App\Models\OlympiadResult;
 use App\Traits\DynamicTableTrait;
 use App\Traits\MediaTrait;
 use Illuminate\Database\Eloquent\Builder;
@@ -25,7 +27,17 @@ class OlympiadService
     /**
      * @var string|null
      */
+    protected $failReason = null;
+
+    /**
+     * @var string|null
+     */
     protected $signUpFailReason = null;
+
+    /**
+     * @var string|null
+     */
+    protected $startFailReason = null;
 
     /**
      * @param Builder $query
@@ -48,6 +60,23 @@ class OlympiadService
     {
         $query->where('title', 'like', "%{$search}%")
               ->orWhere('description', 'like', "%{$search}%");
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function checkOlympiadStatus(int $id): bool
+    {
+        $olympiad = $this->find($id);
+
+        if ($olympiad->status !== Olympiad::STATUS_STARTED) {
+            $this->failReason = __("This olympiad is ended or not started yet.");
+
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -83,7 +112,15 @@ class OlympiadService
      */
     public function find(?int $id): ?Olympiad
     {
-        return Olympiad::find($id);
+        return Olympiad::with('questions', 'results')->find($id);
+    }
+
+    /**
+     * @return string
+     */
+    public function getFailReason(): string
+    {
+        return $this->failReason;
     }
 
     /**
@@ -99,11 +136,40 @@ class OlympiadService
     }
 
     /**
+     * @param int      $olympiadId
+     * @param int|null $studentId
+     * @return OlympiadResultDTO|Collection|null
+     */
+    public function getResults(int $olympiadId, int $studentId = null)
+    {
+        if (is_null($studentId)) {
+            $results = OlympiadResult::where('olympiad_id', $olympiadId)
+                                     ->get();
+
+            return $results;
+        }
+
+        $result = OlympiadResult::where('olympiad_id', $olympiadId)
+                                ->where('student_id', $studentId)
+                                ->first();
+
+        return $result ? (new OlympiadResultDTO())->transform($result) : null;
+    }
+
+    /**
      * @return string
      */
     public function getSignUpFailReason(): string
     {
         return $this->signUpFailReason;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStartFailReason(): string
+    {
+        return $this->startFailReason;
     }
 
     /**
@@ -217,6 +283,30 @@ class OlympiadService
         }
 
         $olympiad->participants()->create([
+            'student_id' => $studentId
+        ]);
+
+        return true;
+    }
+
+    /**
+     * @param int $id
+     * @param int $studentId
+     * @return bool
+     */
+    public function start(int $id, int $studentId): bool
+    {
+        $olympiad = Olympiad::find($id);
+
+        if ($olympiad->status === Olympiad::STATUS_ENDED) {
+            $this->startFailReason = __('The olympiad has ended.');
+
+            return false;
+        }
+
+        $olympiad->results()->updateOrcreate([
+            'student_id' => $studentId
+        ], [
             'student_id' => $studentId
         ]);
 
