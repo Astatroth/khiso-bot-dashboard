@@ -57,7 +57,7 @@ class DispatchPipe
      */
     protected function dispatch(Post $post, Student $recipient): void
     {
-        $message = $this->messageService->compileMessage($post, $post->postable, $recipient->chat_id);
+        $message = $this->messageService->compileMessage($post, $post->postable, $recipient);
 
         \Log::info(" - message with id {$message->id} compiled");
 

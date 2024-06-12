@@ -28,6 +28,7 @@ class OlympiadResult extends Model
     protected $fillable = [
         'olympiad_id',
         'student_id',
-        'answers'
+        'answers',
+        'score'
     ];
 }

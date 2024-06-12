@@ -4,15 +4,16 @@ namespace App\Listeners;
 
 use App\Events\OlympiadEndedEvent;
 use App\Models\Post;
+use App\Services\OlympiadService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
 class OlympiadEndedEventListener
 {
     /**
-     * Create the event listener.
+     * @param OlympiadService $olympiadService
      */
-    public function __construct()
+    public function __construct(protected OlympiadService $olympiadService)
     {
         //
     }
@@ -23,6 +24,7 @@ class OlympiadEndedEventListener
     public function handle(OlympiadEndedEvent $event): void
     {
         $model = $event->getOlympiad();
+        $this->olympiadService->calculateScore($model->id);
 
         if (is_null($model->post)) {
             $post = new Post();

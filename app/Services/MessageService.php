@@ -7,6 +7,7 @@ use App\Interfaces\Telegram\HasAdjustableMessagesInterface;
 use App\Interfaces\Telegram\HasInlineReplyMarkupInterface;
 use App\Models\Post;
 use App\Models\PostMessage;
+use App\Models\Student;
 use Illuminate\Database\Eloquent\Model;
 use TelegramBot\Api\HttpException;
 use TelegramBot\Api\Types\Inline\InlineKeyboardMarkup;
@@ -17,12 +18,12 @@ use TelegramBot\Api\Types\InputMedia\InputMediaVideo;
 class MessageService
 {
     /**
-     * @param Post  $post
-     * @param Model $model
-     * @param int   $chatId
+     * @param Post    $post
+     * @param Model   $model
+     * @param Student $recipient
      * @return PostMessage
      */
-    public function compileMessage(Post $post, Model $model, int $chatId): PostMessage
+    public function compileMessage(Post $post, Model $model, Student $recipient): PostMessage
     {
         /**
          * @var PostMessage|null $message
@@ -80,11 +81,11 @@ class MessageService
             }
 
             if ($model instanceof HasAdjustableMessagesInterface) {
-                $description = $model->message();
+                $description = $model->message($recipient->id);
             }
 
             $message->post_id = $post->id;
-            $message->chat_id = $chatId;
+            $message->chat_id = $recipient->chat_id;
             $message->message_type = $type;
             $message->message_content = $description;
             $message->message_parse_mode = 'HTML';

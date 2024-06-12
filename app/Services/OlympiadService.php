@@ -64,6 +64,37 @@ class OlympiadService
 
     /**
      * @param int $id
+     * @return void
+     */
+    public function calculateScore(int $id)
+    {
+        $olympiad = $this->find($id);
+        $questionService = new QuestionService();
+
+        foreach ($olympiad->results as $result) {
+            $score = 0;
+
+            if (!is_null($result->answers)) {
+                foreach ($result->answers as $questionId => $answerId) {
+                    $question = $questionService->find($questionId);
+                    $answer = $question->answers->where('id', $answerId)->first();
+
+                    if ($answer->is_correct) {
+                        $score += $question->correct_answer_cost;
+                    } else {
+                        $score += $question->wrong_answer_cost;
+                    }
+                }
+
+                $result->update([
+                    'score' => $score
+                ]);
+            }
+        }
+    }
+
+    /**
+     * @param int $id
      * @return bool
      */
     public function checkOlympiadStatus(int $id): bool

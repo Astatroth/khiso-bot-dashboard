@@ -5,6 +5,7 @@ namespace App\Services;
 use App\DTOs\Olympiad\QuestionDTO;
 use App\DTOs\Olympiad\QuestionPublicDTO;
 use App\DTOs\Olympiad\QuestionValidatedDTO;
+use App\Events\StudentCompletedQuizEvent;
 use App\Models\Question;
 use App\Traits\DynamicTableTrait;
 use App\Traits\MediaTrait;

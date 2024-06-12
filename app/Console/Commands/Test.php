@@ -4,7 +4,9 @@ namespace App\Console\Commands;
 
 use App\DTOs\Olympiad\QuestionPublicDTO;
 use App\Interfaces\Telegram\PostableInterface;
+use App\Models\Olympiad;
 use App\Models\Post;
+use App\Services\OlympiadService;
 use App\Services\QuestionService;
 use App\Services\SmsService;
 use App\Traits\StatusTrait;
@@ -35,7 +37,9 @@ class Test extends Command
         /*$post = Post::with('postable')->where('id', 4)->first();
         dd($post->postable instanceof PostableInterface);*/
 
-        $question = (new QuestionService())->find(8);
-        (new QuestionPublicDTO())->transform($question);
+        /*$question = (new QuestionService())->find(8);
+        (new QuestionPublicDTO())->transform($question);*/
+
+        Olympiad::find(1)->message(4);
     }
 }
