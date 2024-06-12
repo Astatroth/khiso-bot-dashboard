@@ -61,7 +61,7 @@
                             <div class="col-md-2">
                                 <div class="input-group date">
                                     <input type="text" id="start-date" class="form-control" name="starts_at"
-                                           value="{{ old('starts_at', $entry?->starts_at->date) }}">
+                                           value="{{ old('starts_at', $entry?->starts_at->formatted) }}">
                                     <span class="input-group-text">
                                         <i class="fa-duotone fa-calendar"></i>
                                     </span>
@@ -76,7 +76,7 @@
                             <div class="col-md-2">
                                 <div class="input-group date">
                                     <input type="text" id="end-date" class="form-control" name="ends_at"
-                                           value="{{ old('ends_at', $entry?->ends_at->date) }}">
+                                           value="{{ old('ends_at', $entry?->ends_at->formatted) }}">
                                     <span class="input-group-text">
                                         <i class="fa-duotone fa-calendar"></i>
                                     </span>
