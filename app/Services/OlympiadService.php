@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\DTOs\Olympiad\OlympiadDTO;
 use App\DTOs\Olympiad\OlympiadValidatedDTO;
+use App\Events\OlympiadEndedEvent;
+use App\Events\OlympiadStartedEvent;
 use App\Models\Olympiad;
 use App\Traits\DynamicTableTrait;
 use App\Traits\MediaTrait;
@@ -62,12 +64,38 @@ class OlympiadService
     }
 
     /**
+     * @param int $id
+     * @return void
+     */
+    public function endOlympiad(int $id): void
+    {
+        $olympiad = $this->find($id);
+        $olympiad->update([
+            'status' => Olympiad::STATUS_ENDED
+        ]);
+
+        event(new OlympiadEndedEvent($olympiad));
+    }
+
+    /**
      * @param int|null $id
      * @return Olympiad|null
      */
     public function find(?int $id): ?Olympiad
     {
         return Olympiad::find($id);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getOlympiadsInProgress(): Collection
+    {
+        $results = Olympiad::where('status', Olympiad::STATUS_STARTED)
+                           ->where('ends_at', '<=', now())
+                           ->get();
+
+        return $results;
     }
 
     /**
@@ -97,6 +125,18 @@ class OlympiadService
                 'style' => 'success',
             ]
         ];
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getUpcomingOlympiads(): Collection
+    {
+        $results = Olympiad::where('status', Olympiad::STATUS_CREATED)
+                           ->where('starts_at', '<=', now())
+                           ->get();
+
+        return $results;
     }
 
     /**
@@ -170,12 +210,6 @@ class OlympiadService
             return false;
         }
 
-        if ($olympiad->status === Olympiad::STATUS_STARTED) {
-            $this->signUpFailReason = __('You cannot sign up to a olympiad which has started.');
-
-            return false;
-        }
-
         if ($olympiad->status === Olympiad::STATUS_ENDED) {
             $this->signUpFailReason = __('You cannot sign up to a olympiad which has ended.');
 
@@ -187,5 +221,19 @@ class OlympiadService
         ]);
 
         return true;
+    }
+
+    /**
+     * @param int $id
+     * @return void
+     */
+    public function startOlympiad(int $id): void
+    {
+        $olympiad = $this->find($id);
+        $olympiad->update([
+            'status' => Olympiad::STATUS_STARTED
+        ]);
+
+        event(new OlympiadStartedEvent($olympiad));
     }
 }

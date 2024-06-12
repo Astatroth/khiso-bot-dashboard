@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Interfaces\Telegram\HasAdjustableMessagesInterface;
 use App\Interfaces\Telegram\HasInlineReplyMarkupInterface;
 use App\Traits\AttributeTrait;
 use Illuminate\Database\Eloquent\Builder;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 /**
  * @mixin Builder
  */
-class Olympiad extends Model implements HasInlineReplyMarkupInterface
+class Olympiad extends Model implements HasInlineReplyMarkupInterface, HasAdjustableMessagesInterface
 {
     use AttributeTrait;
     use HasFactory;
@@ -47,12 +48,46 @@ class Olympiad extends Model implements HasInlineReplyMarkupInterface
      * Accessors
      */
 
-    public function inlineMarkup(): array
+    /**
+     * @return array|null
+     */
+    public function inlineMarkup(): array|null
     {
+        if ($this->status === self::STATUS_CREATED) {
+            return [
+                'text' => __('Sign up to participate'),
+                'callback_data' => "signup_{$this->id}"
+            ];
+        }
+
+        if ($this->status === self::STATUS_ENDED) {
+            return null;
+        }
+
         return [
-            'text' => __('Sign up to participate'),
-            'callback_data' => "signup_{$this->id}"
+            'text' => __('Start'),
+            'callback_data' => "start_{$this->id}"
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function message(): string
+    {
+        if ($this->status === self::STATUS_CREATED) {
+            return $this->description;
+        }
+
+        if ($this->status === self::STATUS_ENDED) {
+            return __(
+                "The \":olympiad\" olympiad is ended. Yor results will be considered.", ['olympiad' => $this->title]
+            );
+        }
+
+        return __(
+            "The \":olympiad\" olympiad is started. Press \"Start\" button below to begin.", ['olympiad' => $this->title]
+        );
     }
 
     /*

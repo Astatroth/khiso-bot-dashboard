@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Events\MessageFailedEvent;
+use App\Interfaces\Telegram\HasAdjustableMessagesInterface;
 use App\Interfaces\Telegram\HasInlineReplyMarkupInterface;
 use App\Models\Post;
 use App\Models\PostMessage;
@@ -76,6 +77,10 @@ class MessageService
 
             if ($model instanceof HasInlineReplyMarkupInterface) {
                 $keyboard = $model->inlineMarkup();
+            }
+
+            if ($model instanceof HasAdjustableMessagesInterface) {
+                $description = $model->message();
             }
 
             $message->post_id = $post->id;

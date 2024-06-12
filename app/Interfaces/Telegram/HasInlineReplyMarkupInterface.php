@@ -5,7 +5,7 @@ namespace App\Interfaces\Telegram;
 interface HasInlineReplyMarkupInterface
 {
     /**
-     * @return array
+     * @return array|null
      */
-    public function inlineMarkup(): array;
+    public function inlineMarkup(): array|null;
 }

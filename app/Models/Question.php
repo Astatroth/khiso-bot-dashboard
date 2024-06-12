@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use App\Interfaces\Telegram\HasInlineReplyMarkupInterface;
 use App\Traits\AttributeTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use TelegramBot\Api\Types\Inline\InlineKeyboardMarkup;
 
 /**
  * @mixin Builder
  */
-class Question extends Model
+class Question extends Model implements HasInlineReplyMarkupInterface
 {
     use AttributeTrait;
     use HasFactory;
@@ -31,6 +33,15 @@ class Question extends Model
         'correct_answer_cost',
         'wrong_answer_cost'
     ];
+
+    /**
+     * Accessors
+     */
+
+    public function inlineMarkup(): array
+    {
+        // TODO: Implement inlineMarkup() method.
+    }
 
     /*
      * Relations
