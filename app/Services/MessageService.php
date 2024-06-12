@@ -3,10 +3,12 @@
 namespace App\Services;
 
 use App\Events\MessageFailedEvent;
+use App\Interfaces\Telegram\HasInlineReplyMarkupInterface;
 use App\Models\Post;
 use App\Models\PostMessage;
 use Illuminate\Database\Eloquent\Model;
 use TelegramBot\Api\HttpException;
+use TelegramBot\Api\Types\Inline\InlineKeyboardMarkup;
 use TelegramBot\Api\Types\InputMedia\ArrayOfInputMedia;
 use TelegramBot\Api\Types\InputMedia\InputMediaPhoto;
 use TelegramBot\Api\Types\InputMedia\InputMediaVideo;
@@ -30,7 +32,7 @@ class MessageService
             $message = new PostMessage();
             $description = $model->description;
 
-            if ($model->media->isNotEmpty()) {
+            if (!is_null($model->media) && $model->media->isNotEmpty()) {
                 $description = substr($description, 0, 900);
             }
 
@@ -38,28 +40,42 @@ class MessageService
             $type = PostMessage::TYPE_TEXT;
             $media = null;
 
-            if ($model->media->count() > 1) {
-                $type = PostMessage::TYPE_MEDIA_GROUP;
+            if (!is_null($model->media)) {
+                if ($model->media->count() > 1) {
+                    $type = PostMessage::TYPE_MEDIA_GROUP;
 
-                foreach ($model->media as $index => $_media) {
-                    $media[] = [
-                        'type' => $_media->media_type === $_media::TYPE_PHOTO
-                            ? PostMessage::TYPE_PHOTO
-                            : PostMessage::TYPE_VIDEO,
-                        'media' => $_media->media_type === $_media::TYPE_PHOTO
+                    foreach ($model->media as $index => $_media) {
+                        $media[] = [
+                            'type' => $_media->media_type === $_media::TYPE_PHOTO
+                                ? PostMessage::TYPE_PHOTO
+                                : PostMessage::TYPE_VIDEO,
+                            'media' => $_media->media_type === $_media::TYPE_PHOTO
+                                ? $_media->media_url
+                                : $this->prepareVideoUrl($_media->media_url),
+                            'caption' => $index === 0 ? $description : ''
+                        ];
+                    }
+                } else {
+                    if ($model->media->isNotEmpty()) {
+                        $_media = $model->media->first();
+                        $type = $_media->media_type === $_media::TYPE_PHOTO ? PostMessage::TYPE_PHOTO : PostMessage::TYPE_VIDEO;
+                        $media[0] = $_media->media_type === $_media::TYPE_PHOTO
                             ? $_media->media_url
-                            : $this->prepareVideoUrl($_media->media_url),
-                        'caption' => $index === 0 ? $description : ''
-                    ];
+                            : $this->prepareVideoUrl($_media->media_url);
+                    }
                 }
-            } else {
-                if ($model->media->isNotEmpty()) {
-                    $_media = $model->media->first();
-                    $type = $_media->media_type === $_media::TYPE_PHOTO ? PostMessage::TYPE_PHOTO : PostMessage::TYPE_VIDEO;
-                    $media[0] = $_media->media_type === $_media::TYPE_PHOTO
-                        ? $_media->media_url
-                        : $this->prepareVideoUrl($_media->media_url);
+            } elseif ($model->image) {
+                if (config('app.env') === 'local') {
+                    $media[0] = $model->image;
+                } else {
+                    $media[0] = config('app.url').'/storage/files/shares'.$model->image;
                 }
+
+                $type = PostMessage::TYPE_PHOTO;
+            }
+
+            if ($model instanceof HasInlineReplyMarkupInterface) {
+                $keyboard = $model->inlineMarkup();
             }
 
             $message->post_id = $post->id;
@@ -67,7 +83,7 @@ class MessageService
             $message->message_type = $type;
             $message->message_content = $description;
             $message->message_parse_mode = 'HTML';
-            $message->message_reply_markup = null;
+            $message->message_reply_markup = $keyboard ?? null;
             $message->message_media = $media;
 
             $message->save();
@@ -116,7 +132,13 @@ class MessageService
     {
         $telegramService = new TelegramService();
 
-        // TODO: prepare reply markup if present
+        if ($message->message_reply_markup) {
+            $keyboard = new InlineKeyboardMarkup([
+                [
+                    $message->message_reply_markup
+                ]
+            ]);
+        }
 
         try {
             switch ($message->message_type) {
@@ -127,7 +149,8 @@ class MessageService
                         $message->chat_id,
                         $message->message_media[0],
                         $message->message_content,
-                        $message->message_parse_mode
+                        $message->message_parse_mode,
+                        replyMarkup: $keyboard ?? null
                     );
                     break;
                 case PostMessage::TYPE_VIDEO:
@@ -161,7 +184,8 @@ class MessageService
                     );
                     break;
             }
-        } catch (HttpException $e) {
+        } catch (\Throwable $e) {
+            \Log::debug("Message Service has thrown an Exception: {$e->getMessage()}, trace: {$e->getTraceAsString()}");
             event(new MessageFailedEvent($message));
         }
     }

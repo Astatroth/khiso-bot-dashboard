@@ -20,8 +20,6 @@ class NewsValidatedDTO extends ValidatedDTO
                 'video' => NewsMedia::TYPE_VIDEO
             ])]
         ];
-
-        // TODO: добавить проверку соответствия типа и ссылки
     }
 
     protected function defaults(): array

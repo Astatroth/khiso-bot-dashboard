@@ -2,9 +2,7 @@
 
 namespace App\Dispatchers;
 
-use App\DTOs\News\NewsDTO;
 use App\Models\Post;
-use App\Pipes\CompleteDispatchingPipe;
 use App\Pipes\DispatchPipe;
 use App\Pipes\StartDispatchingPipe;
 use Illuminate\Pipeline\Pipeline;

@@ -1,0 +1,2 @@
+* * * * * php {path}artisan schedule:run >> /dev/null 2>&1
+5 * * * * php {path}artisan app:delete-expired-codes

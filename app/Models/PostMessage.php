@@ -25,7 +25,8 @@ class PostMessage extends Model
      * @var string[]
      */
     protected $casts = [
-        'message_media' => 'array'
+        'message_media' => 'array',
+        'message_reply_markup' => 'array'
     ];
 
     /**
