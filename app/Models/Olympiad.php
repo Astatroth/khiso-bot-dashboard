@@ -60,6 +60,14 @@ class Olympiad extends Model implements HasInlineReplyMarkupInterface
      */
 
     /**
+     * @return HasMany
+     */
+    public function participants(): HasMany
+    {
+        return $this->hasMany(Enrollment::class, 'olympiad_id');
+    }
+
+    /**
      * @return MorphOne
      */
     public function post(): MorphOne

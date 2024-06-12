@@ -40,6 +40,15 @@ class StudentService
     }
 
     /**
+     * @param int|null $id
+     * @return Student|null
+     */
+    public function find(?int $id): ? Student
+    {
+        return Student::find($id);
+    }
+
+    /**
      * @param int $chatId
      * @return object|null
      */

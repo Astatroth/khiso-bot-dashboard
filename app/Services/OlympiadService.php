@@ -21,6 +21,11 @@ class OlympiadService
     protected $model = Olympiad::class;
 
     /**
+     * @var string|null
+     */
+    protected $signUpFailReason = null;
+
+    /**
      * @param Builder $query
      * @param array   $filters
      * @return void
@@ -63,6 +68,14 @@ class OlympiadService
     public function find(?int $id): ?Olympiad
     {
         return Olympiad::find($id);
+    }
+
+    /**
+     * @return string
+     */
+    public function getSignUpFailReason(): string
+    {
+        return $this->signUpFailReason;
     }
 
     /**
@@ -139,5 +152,40 @@ class OlympiadService
         });
 
         return $entry;
+    }
+
+    /**
+     * @param int $olympiadId
+     * @param int $studentId
+     * @return bool
+     */
+    public function signUp(int $olympiadId, int $studentId): bool
+    {
+        $olympiad = Olympiad::with('participants')->find($olympiadId);
+        $participants = $olympiad->participants()->pluck('id')->toArray();
+
+        if (in_array($studentId, $participants)) {
+            $this->signUpFailReason = __('You are already signed up to this olympiad.');
+
+            return false;
+        }
+
+        if ($olympiad->status === Olympiad::STATUS_STARTED) {
+            $this->signUpFailReason = __('You cannot sign up to a olympiad which has started.');
+
+            return false;
+        }
+
+        if ($olympiad->status === Olympiad::STATUS_ENDED) {
+            $this->signUpFailReason = __('You cannot sign up to a olympiad which has ended.');
+
+            return false;
+        }
+
+        $olympiad->participants()->create([
+            'student_id' => $studentId
+        ]);
+
+        return true;
     }
 }

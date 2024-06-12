@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\ConfirmationCodeController;
 use App\Http\Controllers\Api\DistrictController;
 use App\Http\Controllers\Api\InstitutionController;
+use App\Http\Controllers\Api\OlympiadController;
 use App\Http\Controllers\Api\RegionController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\TelegramChannelController;
@@ -40,6 +41,10 @@ Route::middleware(VerifyAccessToken::class)->prefix('v1')->group(function () {
         Route::prefix('code')->controller(ConfirmationCodeController::class)->group(function () {
             Route::post('/send', 'send');
             Route::post('/verify', 'verify');
+        });
+
+        Route::prefix('olympiad')->controller(OlympiadController::class)->group(function () {
+            Route::put('/sign-up', 'signUp');
         });
     });
 });
