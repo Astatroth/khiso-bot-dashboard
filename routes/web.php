@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OlympiadController;
+use App\Http\Controllers\OlympiadResultController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SeoController;
 use App\Http\Controllers\ShortcutController;
@@ -164,6 +165,16 @@ Route::prefix(LaravelLocalization::setLocale())->middleware('localeSessionRedire
                           Route::post('/load', 'ajaxLoadList')->name('load');
                           Route::post('/save', 'save')->name('save');
                           Route::post('/delete', 'ajaxDelete')->name('delete');
+                      });
+
+                      Route::controller(OlympiadResultController::class)->group(function () {
+                          Route::get('/{id}/results', 'showList')->name('result.list');
+                          Route::get('/{id}/results/{result_id}/view', 'showForm')
+                              ->whereNumber('result_id')
+                              ->name('result.view');
+                          Route::get('/{id}/results/export', 'export')->name('result.export');
+
+                          Route::post('/results/load', 'ajaxLoadList')->name('result.load');
                       });
 
                       Route::controller(QuestionController::class)->group(function () {

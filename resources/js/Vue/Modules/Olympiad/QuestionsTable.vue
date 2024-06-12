@@ -64,7 +64,7 @@ export default {
                     width: 75
                 },
                 {
-                    name: this.$t('title'),
+                    name: this.$t('Title'),
                     slug: 'title',
                     sortable: true
                 }

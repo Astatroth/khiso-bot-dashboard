@@ -275,6 +275,15 @@ class OlympiadService
     }
 
     /**
+     * @param int $status
+     * @return bool
+     */
+    public function resultsAvailable(int $status): bool
+    {
+        return $status === Olympiad::STATUS_ENDED;
+    }
+
+    /**
      * @param OlympiadValidatedDTO $dto
      * @return OlympiadDTO
      * @throws \Throwable

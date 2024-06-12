@@ -40,6 +40,11 @@
                    :title="$t('Questions')">
                     <i class="fa-duotone fa-question"></i>
                 </a>
+                <a v-if="row.resultsAvailable" class="btn text-success me-2"
+                   :href="routeEdit.replace(':id/edit', row.id + '/results')"
+                   :title="$t('Results')">
+                    <i class="fa-duotone fa-chart-simple"></i>
+                </a>
                 <a v-if="row.editingAllowed" class="btn text-primary me-2"
                    :href="routeEdit.replace(':id', row.id)"
                    :title="$t('buttons.edit')">
