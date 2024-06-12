@@ -142,6 +142,11 @@ class OlympiadResultExport implements FromCollection, WithHeadings, WithMapping,
                 'font' => [
                     'bold' => true
                 ],
+            ],
+            2 => [
+                'font' => [
+                    'bold' => true
+                ],
             ]
         ];
     }
