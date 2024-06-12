@@ -19,7 +19,8 @@ class OlympiadResult extends Model
      * @var string[]
      */
     protected $casts = [
-        'answers' => 'array'
+        'answers' => 'array',
+        'finished_at' => 'datetime'
     ];
 
     /**
@@ -29,6 +30,7 @@ class OlympiadResult extends Model
         'olympiad_id',
         'student_id',
         'answers',
-        'score'
+        'score',
+        'finished_at'
     ];
 }

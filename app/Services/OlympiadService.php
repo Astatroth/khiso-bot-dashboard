@@ -255,6 +255,17 @@ class OlympiadService
     }
 
     /**
+     * @param int $resultId
+     * @return void
+     */
+    public function markFinished(int $resultId): void
+    {
+        OlympiadResult::where('id', $resultId)->update([
+            'finished_at' => now()
+        ]);
+    }
+
+    /**
      * @param Collection $results
      * @return \Illuminate\Support\Collection
      */

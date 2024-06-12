@@ -69,9 +69,12 @@ class QuestionService
      */
     public function getQuestionByNumber(int $olympiadId, int $number, ValidatedDTO $result = null): QuestionPublicDTO|string
     {
-        $olympiad = (new OlympiadService())->find($olympiadId);
+        $olympiadService = new OlympiadService();
+        $olympiad = $olympiadService->find($olympiadId);
 
         if ($result->created_at->raw->diffInMinutes(now()) >= $olympiad->time_limit) {
+            $olympiadService->markFinished($result->id);
+
             $string = __("You have exceeded the time limit of :limit", [
                 'limit' => $olympiad->time_limit
                 ]);
@@ -86,6 +89,7 @@ class QuestionService
         $questions = Question::with('answers')->where('olympiad_id', $olympiadId)->get();
 
         if ($number > $questions->count()) {
+            $olympiadService->markFinished($result->id);
             return __("You have answered all the questions.")."\r\n\r\n".__("Your results will be considered.");
         }
 
@@ -139,12 +143,23 @@ class QuestionService
      */
     public function registerAnswer(int $questionId, int $answerId, int $studentId): bool|string
     {
+        $olympiadService = new OlympiadService();
         $question = $this->find($questionId);
 
         // Check if time limit is not exceeded yet
         $result = $question->olympiad->results()->where('student_id', $studentId)->first();
         if ($result->created_at->diffInMinutes(now()) >= $question->olympiad->time_limit) {
-            return __("You have exceeded the time limit of :limit", ['limit' => $question->olympiad->time_limit])."\r\n\r\n".__("Your results will be considered.");
+            $olympiadService->markFinished($result->id);
+
+            $string = __("You have exceeded the time limit of :limit", [
+                'limit' => $question->olympiad->time_limit
+            ]);
+
+            if (!is_null($result->answers)) {
+                $string .= "\r\n\r\n".__("Your results will be considered.");
+            }
+
+            return $string;
         }
 
         if (is_null($result->answers)) {
