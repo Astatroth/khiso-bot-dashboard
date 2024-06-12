@@ -2,9 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Interfaces\Telegram\PostableInterface;
 use App\Models\Post;
 use App\Services\SmsService;
+use App\Traits\StatusTrait;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Model;
 
 class Test extends Command
 {
@@ -28,6 +31,6 @@ class Test extends Command
     public function handle()
     {
         $post = Post::with('postable')->where('id', 4)->first();
-        dd($post->postable::STATUS_SENT);
+        dd($post->postable instanceof PostableInterface);
     }
 }

@@ -55,6 +55,7 @@
                                                   class="form-control summernote">
                                             {{ old('description') ?? $entry?->description }}
                                         </textarea>
+                                        <span id="total-characters"></span>
                                     </div>
                                 </div>
                             </div>
@@ -247,6 +248,8 @@
             return output;
         }
 
+        const charactersLimit = 745;
+
         $(function () {
             document.emojiType = 'unicode';
             document.emojiSource = '{{ vendor('summernote-emoji-master/tam-emoji/img') }}';
@@ -258,17 +261,43 @@
                     ['style', ['bold', 'italic', 'underline', 'clear']],
                     ['insert', ['link', 'emoji']]
                 ],
-                callbacks: {
-                    onPaste: function (e) {
-                        var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
-
-                        e.preventDefault();
-
-                        // Firefox fix
-                        setTimeout(function () {
-                            document.execCommand('insertText', false, CleanPastedHTML(bufferText));
-                        }, 10);
+                onKeydown: function (e) {
+                    let characters = $('.summernote').summernote('code').replace(/(<([^>]+)>)/ig, "");
+                    let totalCharacters = characters.length;
+                    $("#total-characters").text(totalCharacters + " / " + charactersLimit);
+                    var t = e.currentTarget.innerText;
+                    if (t.trim().length >= charactersLimit) {
+                        if (e.keyCode != 8 && !(e.keyCode >= 37 && e.keyCode <= 40) && e.keyCode != 46 && !(e.keyCode == 88 && e.ctrlKey) && !(e.keyCode == 67 && e.ctrlKey)) e.preventDefault();
                     }
+                },
+                onKeyup: function(e) {
+                    var t = e.currentTarget.innerText;
+                    $('.summernote').text(charactersLimit - t.trim().length);
+                },
+                onPaste: function (e) {
+                    var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+
+                    e.preventDefault();
+
+                    // Firefox fix
+                    setTimeout(function () {
+                        document.execCommand('insertText', false, CleanPastedHTML(bufferText));
+                    }, 10);
+
+                    let characters = $('.summernote').summernote('code').replace(/(<([^>]+)>)/ig, "");
+                    let totalCharacters = characters.length;
+                    $("#total-characters").text(totalCharacters + " / " + charactersLimit);
+                    var t = e.currentTarget.innerText;
+                    var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                    e.preventDefault();
+                    var maxPaste = bufferText.length;
+                    if (t.length + bufferText.length > charactersLimit) {
+                        maxPaste = charactersLimit - t.length;
+                    }
+                    if (maxPaste > 0) {
+                        document.execCommand('insertText', false, bufferText.substring(0, maxPaste));
+                    }
+                    $('.summernote').text(charactersLimit - t.length);
                 }
             });
 

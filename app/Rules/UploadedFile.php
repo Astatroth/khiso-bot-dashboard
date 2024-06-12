@@ -30,7 +30,7 @@ class UploadedFile implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (!$value instanceof \Illuminate\Http\UploadedFile) {
-            $fail('validation.file', ['attribute' => $attribute]);
+            $fail(__('validation.file', ['attribute' => $attribute]));
         }
 
         if ($this->size > 0) {
@@ -38,7 +38,7 @@ class UploadedFile implements ValidationRule
             $maxSize = $this->size * 1024;
 
             if ($filesize > $maxSize) {
-                $fail('validation.size.file', ['attribute' => $attribute, 'size' => $this->size]);
+                $fail(__('validation.size.file', ['attribute' => $attribute, 'size' => $this->size]));
             }
         }
     }

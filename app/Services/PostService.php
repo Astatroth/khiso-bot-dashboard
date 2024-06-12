@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Interfaces\Telegram\PostableInterface;
 use App\Models\Post;
 use App\Traits\StatusTrait;
 use Illuminate\Support\Collection;
@@ -28,12 +29,14 @@ class PostService
             'status' => Post::STATUS_FAILED
         ]);
 
-        /**
-         * @var StatusTrait $post->postable
-         */
-        $post->postable()->update([
-            'status' => $post->postable::STATUS_FAILED
-        ]);
+        if ($post->postable instanceof PostableInterface) {
+            /**
+             * @var StatusTrait $post->postable
+             */
+            $post->postable()->update([
+                'status' => $post->postable::STATUS_FAILED
+            ]);
+        }
     }
 
     /**
@@ -48,12 +51,14 @@ class PostService
             'status' => Post::STATUS_SENDING
         ]);
 
-        /**
-         * @var StatusTrait $post->postable
-         */
-        $post->postable()->update([
-            'status' => $post->postable::STATUS_SENDING
-        ]);
+        if ($post->postable instanceof PostableInterface) {
+            /**
+             * @var StatusTrait $post->postable
+             */
+            $post->postable()->update([
+                'status' => $post->postable::STATUS_SENDING
+            ]);
+        }
     }
 
     /**
@@ -68,12 +73,13 @@ class PostService
             'status' => Post::STATUS_SENT
         ]);
 
-        /**
-         * @var StatusTrait $post->postable
-         */
-        $post->postable()->update([
-            'status' => $post->postable::STATUS_SENT,
-            'published_at' => now()
-        ]);
+        if ($post->postable instanceof PostableInterface) {
+            /**
+             * @var StatusTrait $post->postable
+             */
+            $post->postable()->update([
+                'status' => $post->postable::STATUS_SENT
+            ]);
+        }
     }
 }

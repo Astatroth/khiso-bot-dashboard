@@ -14,7 +14,7 @@ class NewsValidatedDTO extends ValidatedDTO
         return [
             'id' => 'sometimes|integer|exists:news,id',
             'title' => 'required|string|max:255',
-            'description' => 'required',
+            'description' => 'required|string|max:745',
             'media' => ['nullable', 'array', new UrlScheme('src'), new MediaTypeUrl([
                 'photo' => NewsMedia::TYPE_PHOTO,
                 'video' => NewsMedia::TYPE_VIDEO

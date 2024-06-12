@@ -14,6 +14,17 @@
                     {{ __('Dashboard') }}
                 </x-dashboard-menu.single-item>
 
+                @permission(['manage_content'])
+                <x-dashboard-menu.header>
+                    {{ __('Olympiads') }}
+                </x-dashboard-menu.header>
+                <x-dashboard-menu.single-item :route="route('admin.olympiad.list')" :iconClass="'fa-medal'"
+                                              :iconStyle="'fa-duotone'"
+                                              :routes="'admin.olympiad.list'">
+                    {{ __('Olypiads') }}
+                </x-dashboard-menu.single-item>
+                @endpermission
+
                 @permission(['manage_settings', 'manage_content'])
                 <x-dashboard-menu.header>
                     Telegram

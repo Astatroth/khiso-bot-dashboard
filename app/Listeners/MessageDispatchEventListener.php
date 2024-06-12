@@ -50,8 +50,8 @@ class MessageDispatchEventListener implements ShouldQueue
             $this->messageService->sendMessage($message);
 
             event(new MessageSentEvent($message));
-        } catch (TelegramException $e) {
-            //event(new MessageFailedEvent($message));
+        } catch (\Exception $e) {
+            // void
         }
     }
 }

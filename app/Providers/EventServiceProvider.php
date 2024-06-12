@@ -6,10 +6,12 @@ use App\Events\MessageDispatchEvent;
 use App\Events\MessageFailedEvent;
 use App\Events\MessageSentEvent;
 use App\Events\NewsSavedEvent;
+use App\Events\OlympiadSavedEvent;
 use App\Listeners\MessageDispatchEventListener;
 use App\Listeners\MessageFailedEventListener;
 use App\Listeners\MessageSentEventListener;
 use App\Listeners\NewsSavedEventListener;
+use App\Listeners\OlympiadSavedEventListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -31,6 +33,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         MessageFailedEvent::class => [
             MessageFailedEventListener::class
+        ],
+        OlympiadSavedEvent::class => [
+            OlympiadSavedEventListener::class
         ]
     ];
 

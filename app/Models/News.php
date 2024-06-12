@@ -2,19 +2,19 @@
 
 namespace App\Models;
 
+use App\Interfaces\Telegram\PostableInterface;
 use App\Traits\AttributeTrait;
 use App\Traits\StatusTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
  * @mixin Builder
  */
-class News extends Model
+class News extends Model implements PostableInterface
 {
     use AttributeTrait;
     use HasFactory;

@@ -49,7 +49,7 @@ class NewsService
     protected function applyListSearch(Builder &$query, string $search)
     {
         $query->where('title', 'like', "%{$search}%")
-              ->orWhere('title', 'like', "%{$search}%");
+              ->orWhere('description', 'like', "%{$search}%");
     }
 
     /**

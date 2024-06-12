@@ -4,6 +4,8 @@ use App\Http\Controllers\ArtisanController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\OlympiadController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SeoController;
 use App\Http\Controllers\ShortcutController;
 use App\Http\Controllers\TelegramChannelController;
@@ -144,6 +146,41 @@ Route::prefix(LaravelLocalization::setLocale())->middleware('localeSessionRedire
                       Route::post('/load', 'ajaxLoadList')->name('load');
                       Route::post('/save', 'save')->name('save');
                       Route::post('/delete', 'ajaxDelete')->name('delete');
+                  });
+
+             /*
+              * Olympiads
+              */
+             Route::prefix('olympiad')
+                  ->name('olympiad.')
+                  ->middleware('permission:manage_content')
+                  ->group(function () {
+
+                      Route::controller(OlympiadController::class)->group(function () {
+                          Route::get('/', 'showList')->name('list');
+                          Route::get('/add', 'showForm')->name('add');
+                          Route::get('/{id}/edit', 'showForm')->whereNumber('id')->name('edit');
+
+                          Route::post('/load', 'ajaxLoadList')->name('load');
+                          Route::post('/save', 'save')->name('save');
+                          Route::post('/delete', 'ajaxDelete')->name('delete');
+                      });
+
+                      Route::controller(QuestionController::class)->group(function () {
+                          Route::get('/{olympiad_id}/question/list', 'showList')
+                               ->whereNumber('course_id')->name('question.list');
+                          Route::get('/{olympiad_id}/question/add', 'showForm')
+                               ->whereNumber('olympiad_id')->name('question.add');
+                          Route::get('/{olympiad_id}/question/{id}/edit', 'showForm')
+                               ->whereNumber(['olympiad_id', 'id'])->name('question.edit');
+
+                          Route::post('/question/load', 'ajaxLoadList')->name('question.load');
+                          Route::post('/question/save', 'save')->name('question.save');
+                          Route::post('/question/delete', 'ajaxDelete')->name('question.delete');
+
+                          Route::post('/question/import', 'import')->name('question.import');
+                          Route::get('/question/template', 'downloadTemplate')->name('question.template');
+                      });
                   });
          });
 

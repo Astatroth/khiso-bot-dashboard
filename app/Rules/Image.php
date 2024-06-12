@@ -35,11 +35,11 @@ class Image implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (!$value instanceof UploadedFile) {
-            $fail('validation.file', ['attribute' => $attribute]);
+            $fail(__('validation.file', ['attribute' => $attribute]));
         }
 
         if (!$this->validateMimes($attribute, $value, explode(',', $this->mimes))) {
-            $fail('validation.mimes', ['attribute' => $attribute, 'values' => $this->mimes]);
+            $fail(__('validation.mimes', ['attribute' => $attribute, 'values' => $this->mimes]));
         }
 
         if ($this->size > 0) {
@@ -47,7 +47,7 @@ class Image implements ValidationRule
             $maxSize = $this->size * 1024;
 
             if ($filesize > $maxSize) {
-                $fail('validation.size.file', ['attribute' => $attribute, 'size' => $this->size]);
+                $fail(__('validation.size.file', ['attribute' => $attribute, 'size' => $this->size]));
             }
         }
     }
