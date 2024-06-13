@@ -40,6 +40,7 @@ class QuestionPublicDTO extends ValidatedDTO
 
         if ($model->type !== $model::TYPE_TEXT) {
             $this->parseFiles($model, 'content');
+            $this->content = $this->content->url;
         } else {
             $this->content = (new MessageService())->sanitizeContent($this->content);
         }
