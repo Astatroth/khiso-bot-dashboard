@@ -63,6 +63,8 @@ class Olympiad extends Model implements HasInlineReplyMarkupInterface, HasAdjust
         if ($this->status === self::STATUS_ENDED) {
             return null;
         }
+
+        return null;
     }
 
     /**
