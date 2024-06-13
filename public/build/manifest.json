@@ -1,11 +1,15 @@
 {
+  "_@popperjs-Xz1QtwaH.js": {
+    "file": "assets/js/@popperjs-Xz1QtwaH.js",
+    "name": "@popperjs"
+  },
   "_Artisan-CHLSoHl4.js": {
     "file": "assets/js/Artisan-CHLSoHl4.js",
     "name": "Artisan"
   },
-  "_News-!~{005}~.js": {
+  "_News-!~{008}~.js": {
     "file": "assets/css/News-Cj7XJNZo.css",
-    "src": "_News-!~{005}~.js"
+    "src": "_News-!~{008}~.js"
   },
   "_News-CshRQUbm.js": {
     "file": "assets/js/News-CshRQUbm.js",
@@ -42,9 +46,9 @@
       "_Artisan-CHLSoHl4.js"
     ]
   },
-  "_TranslationManager-!~{00a}~.js": {
+  "_TranslationManager-!~{00d}~.js": {
     "file": "assets/css/TranslationManager-cWk1q0sT.css",
-    "src": "_TranslationManager-!~{00a}~.js"
+    "src": "_TranslationManager-!~{00d}~.js"
   },
   "_TranslationManager-DCKl07Ok.js": {
     "file": "assets/js/TranslationManager-DCKl07Ok.js",
@@ -61,6 +65,13 @@
     "file": "assets/js/axios-B4uVmeYG.js",
     "name": "axios"
   },
+  "_bootstrap-DgAMIIo7.js": {
+    "file": "assets/js/bootstrap-DgAMIIo7.js",
+    "name": "bootstrap",
+    "imports": [
+      "_@popperjs-Xz1QtwaH.js"
+    ]
+  },
   "_jquery-B7BXwPI6.js": {
     "file": "assets/js/jquery-B7BXwPI6.js",
     "name": "jquery"
@@ -71,6 +82,10 @@
     "imports": [
       "_jquery-B7BXwPI6.js"
     ]
+  },
+  "_transliteration-BOHFgo9o.js": {
+    "file": "assets/js/transliteration-BOHFgo9o.js",
+    "name": "transliteration"
   },
   "_vue-ROl3rvO-.js": {
     "file": "assets/js/vue-ROl3rvO-.js",
@@ -97,6 +112,11 @@
   "resources/css/app.scss": {
     "file": "assets/css/app-BF29Mvxk.css",
     "src": "resources/css/app.scss",
+    "isEntry": true
+  },
+  "resources/css/dashboard.scss": {
+    "file": "assets/css/dashboard-BJFZMi5U.css",
+    "src": "resources/css/dashboard.scss",
     "isEntry": true
   },
   "resources/fonts/Ubuntu-Regular.eot": {
@@ -135,6 +155,21 @@
       "_axios-B4uVmeYG.js",
       "_toastr-CKXPylKU.js",
       "_jquery-B7BXwPI6.js"
+    ]
+  },
+  "resources/js/dashboard.js": {
+    "file": "assets/js/dashboard-C0y4NMti.js",
+    "name": "dashboard",
+    "src": "resources/js/dashboard.js",
+    "isEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_transliteration-BOHFgo9o.js",
+      "_bootstrap-DgAMIIo7.js",
+      "_axios-B4uVmeYG.js",
+      "_toastr-CKXPylKU.js",
+      "_jquery-B7BXwPI6.js",
+      "_@popperjs-Xz1QtwaH.js"
     ]
   }
 }

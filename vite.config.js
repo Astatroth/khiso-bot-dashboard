@@ -12,7 +12,9 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.scss',
+                'resources/css/dashboard.scss',
                 'resources/js/app.js',
+                'resources/js/dashboard.js',
                 'resources/js/Vue/vue.js'
             ],
             refresh: [

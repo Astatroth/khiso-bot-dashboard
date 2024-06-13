@@ -1,0 +1,1 @@
+import"./app-DCERvxNX.js";import{w as o}from"./transliteration-BOHFgo9o.js";import{M as r}from"./bootstrap-DgAMIIo7.js";import"./axios-B4uVmeYG.js";import"./toastr-CKXPylKU.js";import"./jquery-B7BXwPI6.js";import"./@popperjs-Xz1QtwaH.js";window.tr=o,window.Modal=r;
