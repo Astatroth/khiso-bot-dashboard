@@ -94,7 +94,7 @@ class QuestionService
         }
 
         if (is_null($result->answers)) {
-            $question = $questions->shuffle()->values()->get($number);
+            $question = $questions->shuffle()->values()->first();
 
             return (new QuestionPublicDTO())->transform($question);
         }
