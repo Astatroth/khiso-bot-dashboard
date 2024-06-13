@@ -40,6 +40,8 @@ class Test extends Command
         /*$question = (new QuestionService())->find(8);
         (new QuestionPublicDTO())->transform($question);*/
 
-        Olympiad::find(1)->message(4);
+        //Olympiad::find(1)->message(4);
+
+        (new SmsService())->sendMessage('974559676', 'Test sms from TIFT Olympiad Dashboard');
     }
 }

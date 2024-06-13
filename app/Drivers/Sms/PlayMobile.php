@@ -48,7 +48,7 @@ class PlayMobile implements SmsDriverInterface
                 'recipient' => $phone,
                 'message-id' => 'dst'.uniqid(),
                 'sms' => [
-                    'originator' => '3700',
+                    'originator' => 'KHISO',
                     'content' =>[
                         'text' => $content
                     ]
