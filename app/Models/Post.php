@@ -7,6 +7,7 @@ use App\Traits\StatusTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
@@ -44,11 +45,11 @@ class Post extends Model
      */
 
     /**
-     * @return HasOne
+     * @return HasMany
      */
-    public function message(): HasOne
+    public function messages(): HasMany
     {
-        return $this->hasOne(PostMessage::class, 'post_id');
+        return $this->hasMany(PostMessage::class, 'post_id');
     }
 
     /**

@@ -28,7 +28,7 @@ class MessageService
         /**
          * @var PostMessage|null $message
          */
-        $message = $post->message()->first();
+        $message = $post->messages()->where('chat_id', $recipient->chat_id)->first();
 
         if (is_null($message)) {
             $message = new PostMessage();
