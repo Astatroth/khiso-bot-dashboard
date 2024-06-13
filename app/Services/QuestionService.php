@@ -87,7 +87,8 @@ class QuestionService
         }
 
         $questions = Question::with('answers')->where('olympiad_id', $olympiadId)->get();
-        \Log::debug($number, $questions->count());
+        \Log::debug($number);
+        \Log::debug($questions->count());
         if ($number > $questions->count()) {
             $olympiadService->markFinished($result->id);
             return __("You have answered all the questions.")."\r\n\r\n".__("Your results will be considered.");
