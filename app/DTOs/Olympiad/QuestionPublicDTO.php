@@ -39,12 +39,7 @@ class QuestionPublicDTO extends ValidatedDTO
         $this->parseRelation($model, 'answers', AnswerDTO::class);
 
         if ($model->type !== $model::TYPE_TEXT) {
-            $url = parse_url($model->content);
-
             $this->parseFiles($model, 'content');
-            if ($url) {
-                $this->content->url = $this->content->raw;
-            }
         } else {
             $this->content = (new MessageService())->sanitizeContent($this->content);
         }
