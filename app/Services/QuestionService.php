@@ -75,7 +75,7 @@ class QuestionService
         if ($result->created_at->raw->diffInMinutes(now()) >= $olympiad->time_limit) {
             $olympiadService->markFinished($result->id);
 
-            $string = __("You have exceeded the time limit of :limit", [
+            $string = __("You have exceeded the time limit of :limit minutes", [
                 'limit' => $olympiad->time_limit
                 ]);
 
@@ -151,7 +151,7 @@ class QuestionService
         if ($result->created_at->diffInMinutes(now()) >= $question->olympiad->time_limit) {
             $olympiadService->markFinished($result->id);
 
-            $string = __("You have exceeded the time limit of :limit", [
+            $string = __("You have exceeded the time limit of :limit minutes", [
                 'limit' => $question->olympiad->time_limit
             ]);
 
