@@ -292,13 +292,7 @@
                         $("#total-characters").text(totalCharacters + " / " + charactersLimit);
                         var t = e.currentTarget.innerText;
                         e.preventDefault();
-                        var maxPaste = bufferText.length;
-                        if (t.length + bufferText.length > charactersLimit) {
-                            maxPaste = charactersLimit - t.length;
-                        }
-                        if (maxPaste > 0) {
-                            document.execCommand('insertText', false, bufferText.substring(0, maxPaste));
-                        }
+
                         $('.summernote').text(charactersLimit - t.length);
                     }
                 }
@@ -310,6 +304,8 @@
                 $('fieldset#type-{{ Question::TYPE_IMAGE }}').removeClass('d-none');
                 @elseif ($entry->type === Question::TYPE_DOCUMENT)
                 $('fieldset#type-{{ Question::TYPE_DOCUMENT  }}').removeClass('d-none');
+                @else
+                $('fieldset#type-{{ Question::TYPE_TEXT  }}').removeClass('d-none');
                 @endif
             @endif
 
