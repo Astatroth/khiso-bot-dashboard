@@ -231,6 +231,7 @@ class OlympiadService
     {
         $results = Olympiad::where('status', Olympiad::STATUS_CREATED)
                            ->where('starts_at', '<=', now())
+                           ->whereHas('questions')
                            ->get();
 
         return $results;
