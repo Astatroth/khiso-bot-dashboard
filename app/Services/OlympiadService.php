@@ -225,9 +225,9 @@ class OlympiadService
     }
 
     /**
-     * @return Olympiad
+     * @return Olympiad|null
      */
-    public function getUpcomingOlympiad(): Olympiad
+    public function getUpcomingOlympiad(): ?Olympiad
     {
         $result = Olympiad::where('status', Olympiad::STATUS_CREATED)
                            ->where('starts_at', '<=', now())
