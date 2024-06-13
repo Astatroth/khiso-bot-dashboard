@@ -1,0 +1,140 @@
+{
+  "_Artisan-CHLSoHl4.js": {
+    "file": "assets/js/Artisan-CHLSoHl4.js",
+    "name": "Artisan"
+  },
+  "_News-!~{005}~.js": {
+    "file": "assets/css/News-Cj7XJNZo.css",
+    "src": "_News-!~{005}~.js"
+  },
+  "_News-CshRQUbm.js": {
+    "file": "assets/js/News-CshRQUbm.js",
+    "name": "News",
+    "imports": [
+      "_Artisan-CHLSoHl4.js",
+      "_vuejs-paginate-DpguzPcy.js"
+    ],
+    "css": [
+      "assets/css/News-Cj7XJNZo.css"
+    ]
+  },
+  "_Olympiad-BgJGcGrt.js": {
+    "file": "assets/js/Olympiad-BgJGcGrt.js",
+    "name": "Olympiad",
+    "imports": [
+      "_News-CshRQUbm.js",
+      "_Artisan-CHLSoHl4.js"
+    ]
+  },
+  "_Seo-BYQ-J4Hk.js": {
+    "file": "assets/js/Seo-BYQ-J4Hk.js",
+    "name": "Seo",
+    "imports": [
+      "_News-CshRQUbm.js",
+      "_Artisan-CHLSoHl4.js"
+    ]
+  },
+  "_Telegram-FkYv6tcR.js": {
+    "file": "assets/js/Telegram-FkYv6tcR.js",
+    "name": "Telegram",
+    "imports": [
+      "_News-CshRQUbm.js",
+      "_Artisan-CHLSoHl4.js"
+    ]
+  },
+  "_TranslationManager-!~{00a}~.js": {
+    "file": "assets/css/TranslationManager-cWk1q0sT.css",
+    "src": "_TranslationManager-!~{00a}~.js"
+  },
+  "_TranslationManager-DCKl07Ok.js": {
+    "file": "assets/js/TranslationManager-DCKl07Ok.js",
+    "name": "TranslationManager",
+    "imports": [
+      "_News-CshRQUbm.js",
+      "_Artisan-CHLSoHl4.js"
+    ],
+    "css": [
+      "assets/css/TranslationManager-cWk1q0sT.css"
+    ]
+  },
+  "_axios-B4uVmeYG.js": {
+    "file": "assets/js/axios-B4uVmeYG.js",
+    "name": "axios"
+  },
+  "_jquery-B7BXwPI6.js": {
+    "file": "assets/js/jquery-B7BXwPI6.js",
+    "name": "jquery"
+  },
+  "_toastr-CKXPylKU.js": {
+    "file": "assets/js/toastr-CKXPylKU.js",
+    "name": "toastr",
+    "imports": [
+      "_jquery-B7BXwPI6.js"
+    ]
+  },
+  "_vue-ROl3rvO-.js": {
+    "file": "assets/js/vue-ROl3rvO-.js",
+    "name": "vue"
+  },
+  "_vue-cookies-IN-XQBb0.js": {
+    "file": "assets/js/vue-cookies-IN-XQBb0.js",
+    "name": "vue-cookies",
+    "imports": [
+      "_jquery-B7BXwPI6.js"
+    ]
+  },
+  "_vue-i18n-DAWOLBlH.js": {
+    "file": "assets/js/vue-i18n-DAWOLBlH.js",
+    "name": "vue-i18n"
+  },
+  "_vuejs-paginate-DpguzPcy.js": {
+    "file": "assets/js/vuejs-paginate-DpguzPcy.js",
+    "name": "vuejs-paginate",
+    "imports": [
+      "_jquery-B7BXwPI6.js"
+    ]
+  },
+  "resources/css/app.scss": {
+    "file": "assets/css/app-BF29Mvxk.css",
+    "src": "resources/css/app.scss",
+    "isEntry": true
+  },
+  "resources/fonts/Ubuntu-Regular.eot": {
+    "file": "assets/fonts/Ubuntu-Regular-CK8xmijd.eot",
+    "src": "resources/fonts/Ubuntu-Regular.eot"
+  },
+  "resources/fonts/Ubuntu-Regular.ttf": {
+    "file": "assets/fonts/Ubuntu-Regular-BID0zm4i.ttf",
+    "src": "resources/fonts/Ubuntu-Regular.ttf"
+  },
+  "resources/js/Vue/vue.js": {
+    "file": "assets/js/vue-B50rACgp.js",
+    "name": "vue",
+    "src": "resources/js/Vue/vue.js",
+    "isEntry": true,
+    "imports": [
+      "_Artisan-CHLSoHl4.js",
+      "_News-CshRQUbm.js",
+      "_Olympiad-BgJGcGrt.js",
+      "_Seo-BYQ-J4Hk.js",
+      "_Telegram-FkYv6tcR.js",
+      "_TranslationManager-DCKl07Ok.js",
+      "_vue-ROl3rvO-.js",
+      "_vue-i18n-DAWOLBlH.js",
+      "_vue-cookies-IN-XQBb0.js",
+      "_vuejs-paginate-DpguzPcy.js",
+      "_jquery-B7BXwPI6.js"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/js/app-DCERvxNX.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "_axios-B4uVmeYG.js",
+      "_toastr-CKXPylKU.js",
+      "_jquery-B7BXwPI6.js"
+    ]
+  }
+}
