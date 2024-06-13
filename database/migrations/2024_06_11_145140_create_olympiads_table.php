@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('title');
             $table->longText('description');
             $table->string('image');
-            $table->timestamp('starts_at');
-            $table->timestamp('ends_at');
+            $table->timestamp('starts_at')->nullable();
+            $table->timestamp('ends_at')->nullable();
             $table->tinyInteger('status')->default(Olympiad::STATUS_CREATED);
             $table->integer('time_limit');
             $table->timestamps();
