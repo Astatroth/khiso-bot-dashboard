@@ -34,12 +34,10 @@ class StartOlympiad extends Command
      */
     public function handle()
     {
-        $olympiads = $this->service->getUpcomingOlympiads();
+        $olympiad = $this->service->getUpcomingOlympiad();
 
-        if ($olympiads->isNotEmpty()) {
-            foreach ($olympiads as $olympiad) {
-                $this->service->startOlympiad($olympiad->id);
-            }
+        if (!is_null($olympiad)) {
+            $this->service->startOlympiad($olympiad->id);
         }
     }
 }

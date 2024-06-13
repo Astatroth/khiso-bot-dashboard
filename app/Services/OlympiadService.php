@@ -225,16 +225,16 @@ class OlympiadService
     }
 
     /**
-     * @return Collection
+     * @return Olympiad
      */
-    public function getUpcomingOlympiads(): Collection
+    public function getUpcomingOlympiad(): Olympiad
     {
-        $results = Olympiad::where('status', Olympiad::STATUS_CREATED)
+        $result = Olympiad::where('status', Olympiad::STATUS_CREATED)
                            ->where('starts_at', '<=', now())
                            ->whereHas('questions')
-                           ->get();
+                           ->first();
 
-        return $results;
+        return $result;
     }
 
     /**

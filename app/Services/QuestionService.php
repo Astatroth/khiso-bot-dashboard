@@ -105,6 +105,15 @@ class QuestionService
         return (new QuestionPublicDTO())->transform($question);
     }
 
+    public function getRawTypes(): array
+    {
+        return [
+            Question::TYPE_TEXT => 'Text',
+            Question::TYPE_IMAGE => 'Image',
+            Question::TYPE_DOCUMENT => 'Document',
+        ];
+    }
+
     /**
      * @return array
      */

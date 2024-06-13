@@ -49,7 +49,7 @@ class QuestionPublicDTO extends ValidatedDTO
             unset($item->is_correct);
         });
 
-        $this->type_label = (new QuestionService())->getTypes()[$this->type];
+        $this->type_label = (new QuestionService())->getRawTypes()[$this->type];
 
         return $this;
     }
