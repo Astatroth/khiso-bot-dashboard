@@ -83,6 +83,7 @@ class Olympiad extends Model implements HasInlineReplyMarkupInterface, HasAdjust
 
                 app()->setLocale($student->language);
             }
+            \Log::debug(app()->getLocale());
 
             $result = $this->results()->where('student_id', $studentId)->first();
             $strings = [
