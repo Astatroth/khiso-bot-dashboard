@@ -296,9 +296,12 @@ class OlympiadService
         \DB::transaction(function () use ($dto, &$entry) {
             $image = !is_null($dto->image) ? $this->uploadImage($dto->image, encodeTo: 'webp') : $dto->current_image;
 
+            $description = str_replace('<div>', '', $dto->description);
+            $description = str_replace('</div>', "\r\n", $description);
+
             $entry = Olympiad::updateOrCreate(['id' => $dto->id], [
                 'title' => $dto->title,
-                'description' => $dto->description,
+                'description' => $description,
                 'image' => $image,
                 'starts_at' => $dto->starts_at,
                 'ends_at' => $dto->ends_at,
