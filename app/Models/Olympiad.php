@@ -78,6 +78,12 @@ class Olympiad extends Model implements HasInlineReplyMarkupInterface, HasAdjust
         }
 
         if ($this->status === self::STATUS_ENDED) {
+            if ($studentId) {
+                $student = Student::find($studentId);
+
+                app()->setLocale($student->language);
+            }
+
             $result = $this->results()->where('student_id', $studentId)->first();
             $strings = [
                 __('The ":olympiad" is ended.', ['olympiad' => $this->title]),
