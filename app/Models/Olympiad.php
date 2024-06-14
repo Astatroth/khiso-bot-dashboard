@@ -79,8 +79,13 @@ class Olympiad extends Model implements HasInlineReplyMarkupInterface, HasAdjust
 
         if ($this->status === self::STATUS_ENDED) {
             $result = $this->results()->where('student_id', $studentId)->first();
+            $strings = [
+                __('The ":olympiad" is ended.', ['olympiad' => $this->title]),
+                __('Your score is: :score', ['score' => !is_null($result) ? $result->score : 0]),
+                __('The general results will be announced later on our telegram channel.')
+            ];
 
-            return __('The ":olympiad" olympiad is ended. Your score is: :score.', ['olympiad' => $this->title, 'score' => !is_null($result) ? $result->score : 0]);
+            return implode("\r\n\r\n", $strings);
         }
 
         return __('The ":olympiad" olympiad is started. Press "Start" button below to begin.', ['olympiad' => $this->title]);
