@@ -38,6 +38,14 @@
       "_Artisan-CHLSoHl4.js"
     ]
   },
+  "_Student-D73GE5zC.js": {
+    "file": "assets/js/Student-D73GE5zC.js",
+    "name": "Student",
+    "imports": [
+      "_News-CshRQUbm.js",
+      "_Artisan-CHLSoHl4.js"
+    ]
+  },
   "_Telegram-FkYv6tcR.js": {
     "file": "assets/js/Telegram-FkYv6tcR.js",
     "name": "Telegram",
@@ -46,9 +54,9 @@
       "_Artisan-CHLSoHl4.js"
     ]
   },
-  "_TranslationManager-!~{00d}~.js": {
+  "_TranslationManager-!~{00e}~.js": {
     "file": "assets/css/TranslationManager-cWk1q0sT.css",
-    "src": "_TranslationManager-!~{00d}~.js"
+    "src": "_TranslationManager-!~{00e}~.js"
   },
   "_TranslationManager-DCKl07Ok.js": {
     "file": "assets/js/TranslationManager-DCKl07Ok.js",
@@ -128,7 +136,7 @@
     "src": "resources/fonts/Ubuntu-Regular.ttf"
   },
   "resources/js/Vue/vue.js": {
-    "file": "assets/js/vue-B50rACgp.js",
+    "file": "assets/js/vue-eX0KwhZh.js",
     "name": "vue",
     "src": "resources/js/Vue/vue.js",
     "isEntry": true,
@@ -137,6 +145,7 @@
       "_News-CshRQUbm.js",
       "_Olympiad-BgJGcGrt.js",
       "_Seo-BYQ-J4Hk.js",
+      "_Student-D73GE5zC.js",
       "_Telegram-FkYv6tcR.js",
       "_TranslationManager-DCKl07Ok.js",
       "_vue-ROl3rvO-.js",

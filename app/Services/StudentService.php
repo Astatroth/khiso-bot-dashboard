@@ -2,16 +2,33 @@
 
 namespace App\Services;
 
+use App\DTOs\Student\StudentDTO;
 use App\DTOs\Student\StudentValidatedDTO;
 use App\Http\Resources\StudentResource;
 use App\Models\Student;
+use App\Traits\DynamicTableTrait;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 class StudentService
 {
+    use DynamicTableTrait;
+
     /**
      * @var string
      */
     protected $model = Student::class;
+
+    /**
+     * @param Builder $query
+     * @param string  $search
+     * @return void
+     */
+    protected function applyListSearch(Builder &$query, string $search)
+    {
+        $query->where('first_name', 'like', "%{$search}%")
+              ->orWhere('last_name', 'like', "%{$search}%");
+    }
 
     /**
      * @param StudentValidatedDTO $dto
@@ -57,5 +74,23 @@ class StudentService
         $student = Student::where('chat_id', $chatId)->first();
 
         return is_null($student) ? null : (new StudentResource($student))->toObject();
+    }
+
+    /**
+     * @param Builder $query
+     * @return void
+     */
+    protected function includeRelations(Builder &$query)
+    {
+        $query->with(['user', 'region', 'district', 'institution']);
+    }
+
+    /**
+     * @param Collection $results
+     * @return \Illuminate\Support\Collection
+     */
+    protected function parseResults(Collection $results): \Illuminate\Support\Collection
+    {
+        return $results->map(fn ($i) => (new StudentDTO())->transform($i));
     }
 }

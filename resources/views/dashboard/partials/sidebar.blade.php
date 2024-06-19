@@ -23,6 +23,11 @@
                                               :routes="'admin.olympiad.list'">
                     {{ __('Olypiads') }}
                 </x-dashboard-menu.single-item>
+                <x-dashboard-menu.single-item :route="route('admin.student.list')" :iconClass="'fa-users'"
+                                              :iconStyle="'fa-duotone'"
+                                              :routes="'admin.user.list'">
+                    {{ __('Users') }}
+                </x-dashboard-menu.single-item>
                 @endpermission
 
                 @permission(['manage_settings', 'manage_content'])

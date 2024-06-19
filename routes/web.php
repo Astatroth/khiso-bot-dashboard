@@ -9,6 +9,7 @@ use App\Http\Controllers\OlympiadResultController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SeoController;
 use App\Http\Controllers\ShortcutController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TelegramChannelController;
 use App\Http\Controllers\TranslationManagerController;
 use Illuminate\Support\Facades\Route;
@@ -192,6 +193,20 @@ Route::prefix(LaravelLocalization::setLocale())->middleware('localeSessionRedire
                           Route::post('/question/import', 'import')->name('question.import');
                           Route::get('/question/template', 'downloadTemplate')->name('question.template');
                       });
+                  });
+
+             /*
+              * Students
+              */
+
+             Route::prefix('users')
+                  ->name('student.')
+                  ->middleware('permission:manage_content')
+                  ->controller(StudentController::class)
+                  ->group(function () {
+                      Route::get('/', 'showList')->name('list');
+
+                      Route::post('/load', 'ajaxLoadList')->name('load');
                   });
          });
 
