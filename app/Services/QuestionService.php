@@ -203,7 +203,7 @@ class QuestionService
             ];
 
             if ((int)$dto->question_type === Question::TYPE_TEXT) {
-                $data['content'] = strip_tags($dto->question_content_text, ['a', 'b', 'u', 'i']);
+                $data['content'] = preg_replace('/\s+/', ' ', $dto->question_content_text);
             } elseif ((int)$dto->question_type === Question::TYPE_IMAGE) {
                 $image = !is_null($dto->question_content_image)
                     ? $this->uploadImage($dto->question_content_image, encodeTo: 'webp')
