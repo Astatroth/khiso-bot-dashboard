@@ -298,6 +298,7 @@ class OlympiadService
 
             $description = str_replace('<div>', '', $dto->description);
             $description = str_replace('</div>', "\r\n", $description);
+            $description = preg_replace('/\s+/', ' ', $description);
 
             $entry = Olympiad::updateOrCreate(['id' => $dto->id], [
                 'title' => $dto->title,
