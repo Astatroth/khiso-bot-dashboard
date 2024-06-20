@@ -136,7 +136,7 @@ class NewsService
         \DB::transaction(function () use ($dto, &$entry) {
             $entry = News::updateOrCreate(['id' => $dto->id], [
                 'title' => $dto->title,
-                'description' => strip_tags($dto->description, ['a', 'b', 'u', 'i']),
+                'description' => preg_replace('/\s+/', ' ', $dto->description),
                 'url' => $dto->url,
                 'status' => News::STATUS_QUEUED
             ]);

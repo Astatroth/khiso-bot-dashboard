@@ -123,6 +123,8 @@ class MessageService
     {
         $content = str_replace('<br>', "\r\n\r\n", $content);
         $content = str_replace('&nbsp;', " ", $content);
+        $content = str_replace('<p>', " ", $content);
+        $content = str_replace('</p>', "\r\n\r\n", $content);
         $content = strip_tags($content, ['a', 'i', 'u', 'b']);
 
         return $content;
