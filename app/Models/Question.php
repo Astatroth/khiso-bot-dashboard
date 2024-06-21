@@ -39,7 +39,7 @@ class Question extends Model implements HasInlineReplyMarkupInterface
      * Accessors
      */
 
-    public function inlineMarkup(): array
+    public function inlineMarkup(?int $studentId): array
     {
         // TODO: Implement inlineMarkup() method.
     }
