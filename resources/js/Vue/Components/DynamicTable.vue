@@ -377,6 +377,7 @@ export default {
                     this.removeCookie('.search');
                 }
                 this.filters.page = 1;
+                this.page = 1;
                 this.loadData(this.filters);
             }
         }

@@ -8,49 +8,49 @@
     "name": "Artisan"
   },
   "_News-!~{008}~.js": {
-    "file": "assets/css/News-CVb53lKc.css",
+    "file": "assets/css/News-DDDlWieP.css",
     "src": "_News-!~{008}~.js"
   },
-  "_News-B4OSr0-Z.js": {
-    "file": "assets/js/News-B4OSr0-Z.js",
+  "_News-BZBekMl9.js": {
+    "file": "assets/js/News-BZBekMl9.js",
     "name": "News",
     "imports": [
       "_Artisan-CHLSoHl4.js",
       "_vuejs-paginate-DpguzPcy.js"
     ],
     "css": [
-      "assets/css/News-CVb53lKc.css"
+      "assets/css/News-DDDlWieP.css"
     ]
   },
-  "_Olympiad-3qJtZCmd.js": {
-    "file": "assets/js/Olympiad-3qJtZCmd.js",
+  "_Olympiad-DCgv7EXc.js": {
+    "file": "assets/js/Olympiad-DCgv7EXc.js",
     "name": "Olympiad",
     "imports": [
-      "_News-B4OSr0-Z.js",
+      "_News-BZBekMl9.js",
       "_Artisan-CHLSoHl4.js"
     ]
   },
-  "_Seo-D-vGU70X.js": {
-    "file": "assets/js/Seo-D-vGU70X.js",
+  "_Seo-hMiPm0X-.js": {
+    "file": "assets/js/Seo-hMiPm0X-.js",
     "name": "Seo",
     "imports": [
-      "_News-B4OSr0-Z.js",
+      "_News-BZBekMl9.js",
       "_Artisan-CHLSoHl4.js"
     ]
   },
-  "_Student-_KxSV44n.js": {
-    "file": "assets/js/Student-_KxSV44n.js",
+  "_Student-DaLSA2Q9.js": {
+    "file": "assets/js/Student-DaLSA2Q9.js",
     "name": "Student",
     "imports": [
-      "_News-B4OSr0-Z.js",
+      "_News-BZBekMl9.js",
       "_Artisan-CHLSoHl4.js"
     ]
   },
-  "_Telegram-BypEZl2F.js": {
-    "file": "assets/js/Telegram-BypEZl2F.js",
+  "_Telegram-B-5mpWnU.js": {
+    "file": "assets/js/Telegram-B-5mpWnU.js",
     "name": "Telegram",
     "imports": [
-      "_News-B4OSr0-Z.js",
+      "_News-BZBekMl9.js",
       "_Artisan-CHLSoHl4.js"
     ]
   },
@@ -58,11 +58,11 @@
     "file": "assets/css/TranslationManager-cWk1q0sT.css",
     "src": "_TranslationManager-!~{00e}~.js"
   },
-  "_TranslationManager-cURz-k-J.js": {
-    "file": "assets/js/TranslationManager-cURz-k-J.js",
+  "_TranslationManager-BPc8NWkP.js": {
+    "file": "assets/js/TranslationManager-BPc8NWkP.js",
     "name": "TranslationManager",
     "imports": [
-      "_News-B4OSr0-Z.js",
+      "_News-BZBekMl9.js",
       "_Artisan-CHLSoHl4.js"
     ],
     "css": [
@@ -136,18 +136,18 @@
     "src": "resources/fonts/Ubuntu-Regular.ttf"
   },
   "resources/js/Vue/vue.js": {
-    "file": "assets/js/vue-ChZrqisg.js",
+    "file": "assets/js/vue-CIMgVnlC.js",
     "name": "vue",
     "src": "resources/js/Vue/vue.js",
     "isEntry": true,
     "imports": [
       "_Artisan-CHLSoHl4.js",
-      "_News-B4OSr0-Z.js",
-      "_Olympiad-3qJtZCmd.js",
-      "_Seo-D-vGU70X.js",
-      "_Student-_KxSV44n.js",
-      "_Telegram-BypEZl2F.js",
-      "_TranslationManager-cURz-k-J.js",
+      "_News-BZBekMl9.js",
+      "_Olympiad-DCgv7EXc.js",
+      "_Seo-hMiPm0X-.js",
+      "_Student-DaLSA2Q9.js",
+      "_Telegram-B-5mpWnU.js",
+      "_TranslationManager-BPc8NWkP.js",
       "_vue-ROl3rvO-.js",
       "_vue-i18n-DAWOLBlH.js",
       "_vue-cookies-IN-XQBb0.js",
