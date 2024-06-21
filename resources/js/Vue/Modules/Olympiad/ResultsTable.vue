@@ -1,8 +1,14 @@
 <template>
     <div class="vue-component" id="results-table">
         <DynamicTable v-if="isMounted" :route-source="routeSource" :columns="columns" :initial-sorting="sorting"
-                      :enable-search="false" :filters="filters"
+                      :enable-search="true" :filters="filters"
                       ref="table" :id="'results'">
+            <template #fullname="{ row }">
+                {{ row.fullname }}
+                <p class="m-0 small text-muted">
+                    {{ row.student.user.phone }}
+                </p>
+            </template>
             <template #time="{ row }">
                 {{ $t('{min} minutes', {min: row.time}) }}
             </template>
@@ -11,6 +17,11 @@
                    :href="routeView.replace(':id', row.id)"
                    :title="$t('buttons.edit')">
                     <i class="fa-duotone fa-eye"></i>
+                </a>
+                <a v-if="!row.answers && !row.finished_at" class="btn bg-warning text-black"
+                   href="javascript:void(0)" @click="resendButton(row.id)"
+                   :title="$t('Re-send \'Start\' button')">
+                    <i class="fa-duotone fa-rotate-right"></i>
                 </a>
             </template>
         </DynamicTable>
@@ -57,6 +68,21 @@ export default {
             }
         };
     },
+    methods: {
+        resendButton(resultId) {
+            this.$backend.post(this.routeResend, {
+                payload: {
+                    result_id: resultId
+                },
+                fail: (response) => {
+                    toastr.info(response.message);
+                },
+                success: (response) => {
+                    toastr.info(response.message);
+                }
+            });
+        }
+    },
     mixins: [
         ModalMixin,
         TableMixin
@@ -69,6 +95,10 @@ export default {
         olympiadId: {
             required: true,
             type: Number
+        },
+        routeResend: {
+            required: true,
+            type: String
         },
         routeView: {
             required: true,

@@ -21,6 +21,19 @@ class OlympiadResultController extends Controller
         //
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function ajaxResendButton(Request $request): JsonResponse
+    {
+        $result = $this->service->resendButton($request->result_id);
+
+        return response()->json([
+            'message' => $result ? __('Success') : __('Failed to resend the button')
+        ]);
+    }
+
     public function export(int $olympiadId)
     {
         $result = $this->service->export($olympiadId);

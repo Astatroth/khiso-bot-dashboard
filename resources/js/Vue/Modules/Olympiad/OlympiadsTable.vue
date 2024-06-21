@@ -40,7 +40,12 @@
                    :title="$t('Questions')">
                     <i class="fa-duotone fa-question"></i>
                 </a>
-                <a v-if="row.resultsAvailable" class="btn text-success me-2"
+                <a v-if="row.participantsCount > 0" class="btn text-primary"
+                   :href="routeEdit.replace(':id/edit', row.id + '/results')"
+                   :title="$t('Participants')">
+                    <i class="fa-duotone fa-graduation-cap"></i>
+                </a>
+                <a v-if="row.resultsAvailable" class="btn text-success"
                    :href="routeEdit.replace(':id/edit', row.id + '/results')"
                    :title="$t('Results')">
                     <i class="fa-duotone fa-chart-simple"></i>

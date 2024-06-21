@@ -43,6 +43,14 @@ class OlympiadResult extends Model
     /**
      * @return BelongsTo
      */
+    public function olympiad(): BelongsTo
+    {
+        return $this->belongsTo(Olympiad::class, 'olympiad_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class, 'student_id');

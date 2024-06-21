@@ -37,7 +37,7 @@ class ResultDTO extends ValidatedDTO
         $this->parseRelation($model, 'student');
 
         $this->fullname = $model->student->user->name;
-        $this->time = $model->finished_at->diffInMinutes($model->created_at);
+        $this->time = !is_null($model->finished_at) ? $model->finished_at->diffInMinutes($model->created_at) : 0;
 
         return $this;
     }

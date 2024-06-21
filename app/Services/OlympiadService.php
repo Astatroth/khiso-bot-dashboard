@@ -167,6 +167,23 @@ class OlympiadService
     }
 
     /**
+     * @param int $id
+     * @return int
+     */
+    public function getParticipantsCount(int $id): int
+    {
+        $olympiad = Olympiad::where('status', Olympiad::STATUS_STARTED)->find($id);
+
+        if (!$olympiad) {
+            return 0;
+        }
+
+        $results = $olympiad->results()->get();
+
+        return $results->count();
+    }
+
+    /**
      * @param int      $olympiadId
      * @param int|null $studentId
      * @return OlympiadResultDTO|Collection|null

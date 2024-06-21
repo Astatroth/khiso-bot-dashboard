@@ -173,6 +173,8 @@ Route::prefix(LaravelLocalization::setLocale())->middleware('localeSessionRedire
                           Route::get('/{id}/results/{result_id}/view', 'showForm')
                               ->whereNumber('result_id')
                               ->name('result.view');
+                          Route::post('/button/resend', 'ajaxResendButton')
+                               ->name('button.resend');
                           Route::get('/{id}/results/export', 'export')->name('result.export');
 
                           Route::post('/results/load', 'ajaxLoadList')->name('result.load');

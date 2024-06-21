@@ -45,6 +45,7 @@ class OlympiadDTO extends ValidatedDTO
 
         $this->editingAllowed = $service->isEditingAllowed($model->status);
         $this->deletionAllowed = $service->isDeletionAllowed($model->status);
+        $this->participantsCount = $service->getParticipantsCount($model->id);
         $this->resultsAvailable = $service->resultsAvailable($model->status);
 
         return $this;

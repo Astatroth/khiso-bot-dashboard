@@ -8,6 +8,7 @@ use App\Models\OlympiadResult;
 use App\Traits\DynamicTableTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use TelegramBot\Api\Types\Inline\InlineKeyboardMarkup;
 
 class OlympiadResultService
 {
@@ -26,6 +27,18 @@ class OlympiadResultService
     protected function applyListFilters(Builder &$query, array $filters)
     {
         $query->where('olympiad_id', $filters['olympiadId']);
+    }
+
+    /**
+     * @param Builder $query
+     * @param string  $search
+     * @return void
+     */
+    protected function applyListSearch(Builder &$query, string $search)
+    {
+        $query->whereHas('student.user', function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")->orWhere('phone', 'like', "%{$search}%");
+        });
     }
 
     /**
@@ -76,5 +89,35 @@ class OlympiadResultService
     protected function parseResults(Collection $results): \Illuminate\Support\Collection
     {
         return $results->map(fn ($i) => (new ResultDTO())->transform($i));
+    }
+
+    /**
+     * @param int $resultId
+     * @return bool
+     */
+    public function resendButton(int $resultId): bool
+    {
+        $result = OlympiadResult::find($resultId);
+        $telegramService = new TelegramService();
+
+        try {
+            $keyboard = new InlineKeyboardMarkup([
+                [
+                    $result->olympiad->inlineMarkup($result->student_id)
+                ]
+            ]);
+
+            $telegramService->sendPhoto(
+                $result->student->chat_id,
+                config('app.url').'/storage/files/shares'.$result->olympiad->image,
+                (new MessageService())->sanitizeContent($result->olympiad->description),
+                'HTML',
+                $keyboard
+            );
+
+            return true;
+        } catch (\Throwable $e) {
+            return false;
+        }
     }
 }
