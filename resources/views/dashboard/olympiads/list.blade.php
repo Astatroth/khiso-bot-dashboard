@@ -17,7 +17,6 @@
                         <olympiads-table :route-source="'{{ route('admin.olympiad.load') }}'"
                                     :route-edit="'{{ route('admin.olympiad.edit', ['id' => ':id']) }}'"
                                     :route-delete="'{{ route('admin.olympiad.delete') }}'"
-                                     :route-resend="'{{ route('admin.olympiad.button.resend') }}'"
                                     :statuses="{{ json_encode($statuses) }}"></olympiads-table>
                     </div>
                 </x-slot:body>

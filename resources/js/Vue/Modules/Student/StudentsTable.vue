@@ -124,9 +124,30 @@ export default {
             ]
         };
     },
+    methods: {
+        resendButton(id) {
+            this.$backend.post(this.routeResend, {
+                payload: {
+                    id: id
+                },
+                fail: (response) => {
+                    toastr.info(response.message);
+                },
+                success: (response) => {
+                    toastr.info(response.message);
+                }
+            });
+        }
+    },
     mixins: [
         ModalMixin,
         TableMixin
-    ]
+    ],
+    props: {
+        routeResend: {
+            required: true,
+            type: String
+        }
+    }
 }
 </script>

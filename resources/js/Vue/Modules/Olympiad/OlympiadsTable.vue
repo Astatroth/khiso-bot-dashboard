@@ -40,11 +40,6 @@
                    :title="$t('Questions')">
                     <i class="fa-duotone fa-question"></i>
                 </a>
-                <a v-if="!row.resultsAvailable && !row.editingAllowed" class="btn bg-warning text-black"
-                   href="javascript:void(0)" @click="resendButton(row.id)"
-                   :title="$t('Re-send \'Start\' button')">
-                    <i class="fa-duotone fa-rotate-right"></i>
-                </a>
                 <a v-if="row.resultsAvailable" class="btn text-success"
                    :href="routeEdit.replace(':id/edit', row.id + '/results')"
                    :title="$t('Results')">
@@ -126,30 +121,11 @@ export default {
             }
         };
     },
-    methods: {
-        resendButton(id) {
-            this.$backend.post(this.routeResend, {
-                payload: {
-                    id: id
-                },
-                fail: (response) => {
-                    toastr.info(response.message);
-                },
-                success: (response) => {
-                    toastr.info(response.message);
-                }
-            });
-        }
-    },
     mixins: [
         ModalMixin,
         TableMixin
     ],
     props: {
-        routeResend: {
-            required: true,
-            type: String
-        },
         statuses: {
             required: true,
             type: Object
