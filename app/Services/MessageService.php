@@ -77,7 +77,7 @@ class MessageService
             }
 
             if ($model instanceof HasInlineReplyMarkupInterface) {
-                $keyboard = $model->inlineMarkup();
+                $keyboard = $model->inlineMarkup($recipient->id);
             }
 
             if ($model instanceof HasAdjustableMessagesInterface) {

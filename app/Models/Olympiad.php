@@ -49,11 +49,18 @@ class Olympiad extends Model implements HasInlineReplyMarkupInterface, HasAdjust
      */
 
     /**
+     * @param int|null $studentId
      * @return array|null
      */
-    public function inlineMarkup(): array|null
+    public function inlineMarkup(?int $studentId): array|null
     {
         if ($this->status === self::STATUS_STARTED) {
+            if ($studentId) {
+                $student = Student::find($studentId);
+
+                app()->setLocale($student->language);
+            }
+
             return [
                 'text' => __('Start'),
                 'callback_data' => "start_{$this->id}"
