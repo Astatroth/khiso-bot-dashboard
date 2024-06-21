@@ -37,6 +37,19 @@ class OlympiadController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function ajaxResendButton(Request $request): JsonResponse
+    {
+        $result = $this->service->resendButton($request->id);
+
+        return response()->json([
+            'message' => $result ? __('Success') : __('Failed to resend the button')
+        ]);
+    }
+
+    /**
      * @param OlympiadValidatedDTO $dto
      * @return \Illuminate\Http\RedirectResponse
      */

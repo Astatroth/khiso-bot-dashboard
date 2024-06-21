@@ -13,6 +13,7 @@ use App\Traits\DynamicTableTrait;
 use App\Traits\MediaTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use TelegramBot\Api\Types\Inline\InlineKeyboardMarkup;
 
 class OlympiadService
 {
@@ -290,6 +291,19 @@ class OlympiadService
     protected function parseResults(Collection $results): \Illuminate\Support\Collection
     {
         return $results->map(fn ($i) => (new OlympiadDTO())->transform($i));
+    }
+
+    /**
+     * @param int $resultId
+     * @return bool
+     */
+    public function resendButton(int $id): bool
+    {
+        $olympiad = Olympiad::find($id);
+
+        event(new OlympiadStartedEvent($olympiad));
+
+        return true;
     }
 
     /**

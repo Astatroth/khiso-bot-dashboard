@@ -90,34 +90,4 @@ class OlympiadResultService
     {
         return $results->map(fn ($i) => (new ResultDTO())->transform($i));
     }
-
-    /**
-     * @param int $resultId
-     * @return bool
-     */
-    public function resendButton(int $resultId): bool
-    {
-        $result = OlympiadResult::find($resultId);
-        $telegramService = new TelegramService();
-
-        try {
-            $keyboard = new InlineKeyboardMarkup([
-                [
-                    $result->olympiad->inlineMarkup($result->student_id)
-                ]
-            ]);
-
-            $telegramService->sendPhoto(
-                $result->student->chat_id,
-                config('app.url').'/storage/files/shares'.$result->olympiad->image,
-                (new MessageService())->sanitizeContent($result->olympiad->description),
-                'HTML',
-                $keyboard
-            );
-
-            return true;
-        } catch (\Throwable $e) {
-            return false;
-        }
-    }
 }

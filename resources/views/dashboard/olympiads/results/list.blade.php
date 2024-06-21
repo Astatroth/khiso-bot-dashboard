@@ -23,7 +23,7 @@
                         <results-table :route-source="'{{ route('admin.olympiad.result.load') }}'"
                                        :olympiad-id="{{ $olympiadId }}"
                                        :route-view="'{{ route('admin.olympiad.result.view', ['id' => $olympiadId, 'result_id' => ':id']) }}'"
-                                       :route-resend="'{{ route('admin.olympiad.button.resend') }}'"></results-table>
+                                       ></results-table>
                     </div>
                 </x-slot:body>
             </x-card.card>

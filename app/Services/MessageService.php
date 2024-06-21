@@ -23,7 +23,7 @@ class MessageService
      * @param Student $recipient
      * @return PostMessage
      */
-    public function compileMessage(Post $post, Model $model, Student $recipient): PostMessage
+    public function compileMessage(Post $post, Model $model, Student $recipient): ?PostMessage
     {
         /**
          * @var PostMessage|null $message
@@ -93,9 +93,11 @@ class MessageService
             $message->message_media = $media;
 
             $message->save();
+
+            return $message;
         }
 
-        return $message;
+        return null;
     }
 
     /**
