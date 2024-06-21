@@ -117,7 +117,7 @@ class OlympiadResultExport implements FromCollection, WithHeadings, WithMapping,
             $row->student->grade,
             $row->score,
             $row->created_at->formatted,
-            $row->finished_at->formatted,
+            $row->finished_at ? $row->finished_at->formatted : '',
             __(':min minutes', ['min' => $row->time])
         ];
     }

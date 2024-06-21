@@ -27,6 +27,6 @@ class MessageSentEventListener
 
         $this->postService->markAsSent($postId);
 
-        //$message->delete();
+        $message->delete();
     }
 }
