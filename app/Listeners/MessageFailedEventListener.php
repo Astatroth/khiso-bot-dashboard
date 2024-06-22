@@ -25,6 +25,6 @@ class MessageFailedEventListener
 
         $this->postService->markAsFailed($message->post_id);
 
-        //$message->delete();
+        $message->delete();
     }
 }
