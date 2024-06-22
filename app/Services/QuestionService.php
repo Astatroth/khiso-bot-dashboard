@@ -87,7 +87,7 @@ class QuestionService
         }
 
         $questions = Question::with('answers')->where('olympiad_id', $olympiadId)->get();
-        $answeredQuestions = array_keys($result->answers);
+        $answeredQuestions = !is_null($result->answers) ? array_keys($result->answers) : [];
         $question = $questions->filter(fn ($i) => !in_array($i->id, $answeredQuestions))->shuffle()->values()->first();
 
         if ($number > $questions->count() || is_null($question)) {
