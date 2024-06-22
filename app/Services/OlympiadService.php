@@ -9,6 +9,7 @@ use App\Events\OlympiadEndedEvent;
 use App\Events\OlympiadStartedEvent;
 use App\Models\Olympiad;
 use App\Models\OlympiadResult;
+use App\Models\Student;
 use App\Traits\DynamicTableTrait;
 use App\Traits\MediaTrait;
 use Illuminate\Database\Eloquent\Builder;
@@ -294,14 +295,28 @@ class OlympiadService
     }
 
     /**
-     * @param int $resultId
+     * @param int $studentId
      * @return bool
      */
-    public function resendButton(int $id): bool
+    public function resendButton(int $studentId): bool
     {
-        $olympiad = Olympiad::find($id);
+        $olympiad = Olympiad::where('status', Olympiad::STATUS_STARTED)
+                            ->orderBy('id', 'asc')
+                            ->first();
+        $student = (new StudentService())->find($studentId);
 
-        event(new OlympiadStartedEvent($olympiad));
+        $keyboard = new InlineKeyboardMarkup([
+            [
+                $olympiad->inlineMarkup($studentId)
+            ]
+        ]);
+        (new TelegramService())->sendPhoto(
+            $student->chat_id,
+            config('app.url').'/storage/files/shares'.$olympiad->image,
+            $olympiad->message($studentId),
+            'HTML',
+            $keyboard
+        );
 
         return true;
     }

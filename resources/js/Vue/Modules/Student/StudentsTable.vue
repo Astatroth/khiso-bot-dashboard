@@ -5,12 +5,21 @@
             <template #region.name="{ row }">
                 {{ row.region.name }}
             </template>
+            <template #phoneNumber="{ row }">
+                {{ row.phoneNumber }}
+            </template>
             <template v-slot:actions="{ row }">
                 <a class="btn text-primary me-2"
                    @click="openModal('modal', row)"
                    href="javascript:void(0)"
                    :title="$t('View details')">
                     <i class="fa-duotone fa-eye"></i>
+                </a>
+                <a class="btn border-warning text-black"
+                   @click="resendButton(row.id)"
+                   href="javascript:void(0)"
+                   :title="$t('Re-send invitation')">
+                    <i class="fa-duotone fa-rotate-right"></i>
                 </a>
             </template>
         </DynamicTable>
@@ -120,15 +129,20 @@ export default {
                     name: this.$t('Region'),
                     slug: 'region.name',
                     sortable: true
+                },
+                {
+                    name: this.$t('Phone number'),
+                    slug: 'phoneNumber',
+                    sortable: false
                 }
             ]
         };
     },
     methods: {
-        resendButton(id) {
+        resendButton(studentId) {
             this.$backend.post(this.routeResend, {
                 payload: {
-                    id: id
+                    student_id: studentId
                 },
                 fail: (response) => {
                     toastr.info(response.message);

@@ -27,7 +27,10 @@ class StudentService
     protected function applyListSearch(Builder &$query, string $search)
     {
         $query->where('first_name', 'like', "%{$search}%")
-              ->orWhere('last_name', 'like', "%{$search}%");
+              ->orWhere('last_name', 'like', "%{$search}%")
+              ->orWherehas('user', function ($q) use ($search) {
+                  $q->where('phone', 'like', "%{$search}%");
+              });
     }
 
     /**

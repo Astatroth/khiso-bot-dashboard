@@ -42,7 +42,7 @@ class OlympiadController extends Controller
      */
     public function ajaxResendButton(Request $request): JsonResponse
     {
-        $result = $this->service->resendButton($request->id);
+        $result = $this->service->resendButton($request->student_id);
 
         return response()->json([
             'message' => $result ? __('Success') : __('Failed to resend the button')
