@@ -88,8 +88,8 @@ class StudentsExport implements FromCollection, WithHeadings, WithMapping, Shoul
     {
         return [
             $row->id,
-            $row->fullname,
-            $row->gender === "Male" ? __('Male') : __('Female'),
+            $row->first_name.' '.$row->last_name,
+            __($row->gender),
             $row->user->phone,
             $row->date_of_birth,
             $row->region->name,
