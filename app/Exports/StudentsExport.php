@@ -89,7 +89,7 @@ class StudentsExport implements FromCollection, WithHeadings, WithMapping, Shoul
         return [
             $row->id,
             $row->fullname,
-            $row->gender === Student::GENDER_MALE ? __('Male') : __('Female'),
+            $row->gender === "Male" ? __('Male') : __('Female'),
             $row->user->phone,
             $row->date_of_birth,
             $row->region->name,
