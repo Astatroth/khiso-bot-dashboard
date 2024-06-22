@@ -43,16 +43,13 @@ class MessageDispatchEventListener implements ShouldQueue
         sleep(10);
 
         $message = $event->getMessage();
-        $postId = $event->getPostId();
 
         try {
-            if ($message) {
-                \Log::info(" - sending message id: {$message->id}");
+            \Log::info(" - sending message id: {$message->id}");
 
-                $this->messageService->sendMessage($message);
-            }
+            $this->messageService->sendMessage($message);
 
-            event(new MessageSentEvent($postId, $message));
+            event(new MessageSentEvent($message));
         } catch (\Exception $e) {
             // void
         }

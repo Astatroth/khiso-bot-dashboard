@@ -59,11 +59,9 @@ class DispatchPipe
     {
         $message = $this->messageService->compileMessage($post, $post->postable, $recipient);
 
-        if ($message) {
-            \Log::info(" - message with id {$message->id} compiled");
-        }
+        \Log::info(" - message with id {$message->id} compiled");
 
-        event(new MessageDispatchEvent($post->id, $message));
+        event(new MessageDispatchEvent($message));
     }
 
     /**

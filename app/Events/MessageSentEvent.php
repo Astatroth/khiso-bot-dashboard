@@ -15,7 +15,7 @@ class MessageSentEvent
      * @param int              $postId
      * @param PostMessage|null $message
      */
-    public function __construct(protected int $postId, protected ?PostMessage $message)
+    public function __construct(protected ?PostMessage $message)
     {
         //
     }
@@ -26,13 +26,5 @@ class MessageSentEvent
     public function getMessage(): PostMessage|null
     {
         return $this->message;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPostId(): int
-    {
-        return $this->postId;
     }
 }

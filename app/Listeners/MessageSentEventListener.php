@@ -23,9 +23,8 @@ class MessageSentEventListener
     public function handle(MessageSentEvent $event): void
     {
         $message = $event->getMessage();
-        $postId = $event->getPostId();
 
-        $this->postService->markAsSent($postId);
+        $this->postService->markAsSent($message->post_id);
 
         $message->delete();
     }
