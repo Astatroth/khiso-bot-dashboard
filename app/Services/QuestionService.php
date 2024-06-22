@@ -87,8 +87,10 @@ class QuestionService
         }
 
         $questions = Question::with('answers')->where('olympiad_id', $olympiadId)->get();
+        $answeredQuestions = array_keys($result->answers);
+        $question = $questions->filter(fn ($i) => !in_array($i->id, $answeredQuestions))->shuffle()->values()->first();
 
-        if ($number > $questions->count()) {
+        if ($number > $questions->count() || is_null($question)) {
             $olympiadService->markFinished($result->id);
             return __("You have answered all the questions.")."\r\n\r\n".__("Your results will be considered.");
         }
@@ -98,9 +100,6 @@ class QuestionService
 
             return (new QuestionPublicDTO())->transform($question);
         }
-
-        $answeredQuestions = array_keys($result->answers);
-        $question = $questions->filter(fn ($i) => !in_array($i->id, $answeredQuestions))->shuffle()->values()->first();
 
         return (new QuestionPublicDTO())->transform($question);
     }
