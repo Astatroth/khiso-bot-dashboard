@@ -72,20 +72,6 @@ class QuestionService
         $olympiadService = new OlympiadService();
         $olympiad = $olympiadService->find($olympiadId);
 
-        if ($result->created_at->raw->diffInMinutes(now()) >= $olympiad->time_limit) {
-            $olympiadService->markFinished($result->id);
-
-            $string = __("You have exceeded the time limit of :limit minutes", [
-                'limit' => $olympiad->time_limit
-                ]);
-
-            if (!is_null($result->answers)) {
-                $string .= "\r\n\r\n".__("Your results will be considered.");
-            }
-
-            return $string;
-        }
-
         $questions = Question::with('answers')->where('olympiad_id', $olympiadId)->get();
         $answeredQuestions = !is_null($result->answers) ? array_keys($result->answers) : [];
         $question = $questions->filter(fn ($i) => !in_array($i->id, $answeredQuestions))->shuffle()->values()->first();
@@ -93,6 +79,20 @@ class QuestionService
         if ($number > $questions->count() || is_null($question)) {
             $olympiadService->markFinished($result->id);
             return __("You have answered all the questions.")."\r\n\r\n".__("Your results will be considered.");
+        }
+
+        if ($result->created_at->raw->diffInMinutes(now()) >= $olympiad->time_limit) {
+            $olympiadService->markFinished($result->id);
+
+            $string = __("You have exceeded the time limit of :limit minutes", [
+                'limit' => $olympiad->time_limit
+            ]);
+
+            if (!is_null($result->answers)) {
+                $string .= "\r\n\r\n".__("Your results will be considered.");
+            }
+
+            return $string;
         }
 
         if (is_null($result->answers)) {
