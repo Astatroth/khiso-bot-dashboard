@@ -38,8 +38,8 @@
       "_Artisan-CHLSoHl4.js"
     ]
   },
-  "_Student-DaLSA2Q9.js": {
-    "file": "assets/js/Student-DaLSA2Q9.js",
+  "_Student-DOAFyLLQ.js": {
+    "file": "assets/js/Student-DOAFyLLQ.js",
     "name": "Student",
     "imports": [
       "_News-BZBekMl9.js",
@@ -136,7 +136,7 @@
     "src": "resources/fonts/Ubuntu-Regular.ttf"
   },
   "resources/js/Vue/vue.js": {
-    "file": "assets/js/vue-CIMgVnlC.js",
+    "file": "assets/js/vue-CN180Tl4.js",
     "name": "vue",
     "src": "resources/js/Vue/vue.js",
     "isEntry": true,
@@ -145,7 +145,7 @@
       "_News-BZBekMl9.js",
       "_Olympiad-DCgv7EXc.js",
       "_Seo-hMiPm0X-.js",
-      "_Student-DaLSA2Q9.js",
+      "_Student-DOAFyLLQ.js",
       "_Telegram-B-5mpWnU.js",
       "_TranslationManager-BPc8NWkP.js",
       "_vue-ROl3rvO-.js",
