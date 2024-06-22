@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\DTOs\Student\StudentDTO;
 use App\DTOs\Student\StudentValidatedDTO;
+use App\Exports\StudentsExport;
 use App\Http\Resources\StudentResource;
 use App\Models\Student;
 use App\Traits\DynamicTableTrait;
@@ -57,6 +58,23 @@ class StudentService
             'institution_id' => $dto->institution_id,
             'grade' => $dto->grade
         ]);
+    }
+
+    /**
+     * @param int $id
+     * @return StudentsExport|false
+     */
+    public function export()
+    {
+        $results = Student::with(['user'])->get();
+
+        if ($results->isEmpty()) {
+            return false;
+        }
+
+        $results = $results->map(fn ($i) => (new StudentDTO())->transform($i));
+
+        return new StudentsExport($results);
     }
 
     /**

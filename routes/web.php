@@ -209,6 +209,7 @@ Route::prefix(LaravelLocalization::setLocale())->middleware('localeSessionRedire
                       Route::get('/', 'showList')->name('list');
 
                       Route::post('/load', 'ajaxLoadList')->name('load');
+                      Route::get('/export', 'export')->name('export');
                   });
          });
 
