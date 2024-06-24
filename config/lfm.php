@@ -61,6 +61,7 @@ return [
                 'image/webp',
                 'application/pdf',
                 'text/plain',
+                'video/mp4'
             ],
         ],
         'image' => [
