@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DTOs\Olympiad\OlympiadResultDTO;
 use App\DTOs\Olympiad\ResultDTO;
 use App\Services\OlympiadResultService;
+use App\Services\OlympiadService;
 use App\Traits\DynamicTableTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,6 +25,7 @@ class OlympiadResultController extends Controller
     public function export(int $olympiadId)
     {
         $result = $this->service->export($olympiadId);
+        $olympiad = (new OlympiadService())->find($olympiadId);
 
         if ($result === false) {
             $this->error(__('Export failed.'));
@@ -32,7 +34,7 @@ class OlympiadResultController extends Controller
         }
 
         return $result->download(
-            'results_olympiad_'.$olympiadId.'_'.date('d.m.Y').'.xlsx',
+            'results_olympiad_'.$olympiadId.'_'.($olympiad->ends_at->format('d.m.Y')).'.xlsx',
             \Maatwebsite\Excel\Excel::XLSX,
             [
                 'Content-Type' => 'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
