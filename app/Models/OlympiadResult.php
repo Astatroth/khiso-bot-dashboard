@@ -33,6 +33,7 @@ class OlympiadResult extends Model
         'student_id',
         'answers',
         'score',
+        'max_score',
         'finished_at'
     ];
 
