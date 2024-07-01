@@ -75,13 +75,12 @@ class OlympiadService
 
         foreach ($olympiad->results as $result) {
             $score = 0;
-            $maxScore = 0;
+            $maxScore = $olympiad->questions()->sum('correct_answer_cost');
 
             if (!is_null($result->answers)) {
                 foreach ($result->answers as $questionId => $answerId) {
                     $question = $questionService->find($questionId);
                     $answer = $question->answers->where('id', $answerId)->first();
-                    $maxScore += $question->correct_answer_cost;
 
                     if ($answer->is_correct) {
                         $score += $question->correct_answer_cost;
