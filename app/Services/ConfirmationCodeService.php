@@ -63,7 +63,7 @@ class ConfirmationCodeService
             (new SmsService())->sendMessage(
                 $phoneNumber,
                 __("Your verification code for :app is :code", [
-                    'app' => '@tift_olympiad_bot',
+                    'app' => '@al_khis_bot',
                     'code' => $code
                 ])
             );
