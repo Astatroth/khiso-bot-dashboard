@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\DTOs\Student\StudentValidatedDTO;
+use App\Models\User;
 use App\Services\ConfirmationCodeService;
 use App\Services\StudentService;
 use App\Services\UserService;
@@ -26,14 +27,18 @@ class StudentController extends ApiController
     public function create(StudentValidatedDTO $dto): JsonResponse
     {
         \DB::transaction(function () use ($dto) {
-            $user = (new UserService())->create(
-                $dto->full_name,
-                'student_'.md5(uniqid().time()),
-                \Str::random(16),
-                phone: $dto->phone_number
-            );
-            $this->studentService->create($dto, $user->id);
-            (new ConfirmationCodeService())->deleteCode($dto->phone_number);
+            $userExists = User::where('phone', $dto->phone_number)->exists();
+
+            if (!$userExists) {
+                $user = (new UserService())->create(
+                    $dto->full_name,
+                    'student_'.md5(uniqid().time()),
+                    \Str::random(16),
+                    phone: $dto->phone_number
+                );
+                $this->studentService->create($dto, $user->id);
+                (new ConfirmationCodeService())->deleteCode($dto->phone_number);
+            }
         });
 
         return $this->json([]);
