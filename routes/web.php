@@ -181,7 +181,9 @@ Route::prefix(LaravelLocalization::setLocale())->middleware('localeSessionRedire
                       });
 
                       Route::controller(QuestionController::class)->group(function () {
-                          Route::get('/{olympiad_id}/question/list', 'showList')
+                          Route::get('/{olympiad_id}/question', 'showForm')->name('question');
+                          Route::post('/question/save', 'save')->name('question.save');
+                          /*Route::get('/{olympiad_id}/question/list', 'showList')
                                ->whereNumber('course_id')->name('question.list');
                           Route::get('/{olympiad_id}/question/add', 'showForm')
                                ->whereNumber('olympiad_id')->name('question.add');
@@ -193,7 +195,7 @@ Route::prefix(LaravelLocalization::setLocale())->middleware('localeSessionRedire
                           Route::post('/question/delete', 'ajaxDelete')->name('question.delete');
 
                           Route::post('/question/import', 'import')->name('question.import');
-                          Route::get('/question/template', 'downloadTemplate')->name('question.template');
+                          Route::get('/question/template', 'downloadTemplate')->name('question.template');*/
                       });
                   });
 

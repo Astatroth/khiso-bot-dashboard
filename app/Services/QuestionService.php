@@ -6,6 +6,7 @@ use App\DTOs\Olympiad\QuestionDTO;
 use App\DTOs\Olympiad\QuestionPublicDTO;
 use App\DTOs\Olympiad\QuestionValidatedDTO;
 use App\Events\StudentCompletedQuizEvent;
+use App\Models\Olympiad;
 use App\Models\Question;
 use App\Traits\DynamicTableTrait;
 use App\Traits\MediaTrait;
@@ -74,7 +75,7 @@ class QuestionService
 
         $questions = Question::with('answers')->where('olympiad_id', $olympiadId)->get();
         $answeredQuestions = !is_null($result->answers) ? array_keys($result->answers) : [];
-        $question = $questions->filter(fn ($i) => !in_array($i->id, $answeredQuestions))->shuffle()->values()->first();
+        $question = $questions->filter(fn ($i) => !in_array($i->id, $answeredQuestions))->values()->first();
 
         if ($number > $questions->count() || is_null($question)) {
             $olympiadService->markFinished($result->id);
@@ -96,7 +97,7 @@ class QuestionService
         }
 
         if (is_null($result->answers)) {
-            $question = $questions->shuffle()->values()->first();
+            $question = $questions->values()->first();
 
             return (new QuestionPublicDTO())->transform($question);
         }
@@ -186,6 +187,42 @@ class QuestionService
     }
 
     /**
+     * @param int   $olympiadId
+     * @param int   $studentId
+     * @param array $answers
+     * @return bool|string
+     */
+    public function registerAnswers(int $olympiadId, int $studentId, array $answers): string
+    {
+        $olympiadService = new OlympiadService();
+        $olympiad = $olympiadService->find($olympiadId);
+
+        if ($olympiad->status === Olympiad::STATUS_ENDED) {
+            return __('The olympiad has ended.');
+        }
+
+        $question = $olympiad->question;
+        $result = $question->olympiad->results()->where('student_id', $studentId)->first();
+        if ($result->created_at->diffInMinutes(now()) >= $question->olympiad->time_limit) {
+            $olympiadService->markFinished($result->id);
+
+            $string = __("You have exceeded the time limit of :limit minutes", [
+                'limit' => $question->olympiad->time_limit
+            ]);
+
+            if (!is_null($result->answers)) {
+                $string .= "\r\n\r\n" . __("Your results will be considered.");
+            }
+
+            return $string;
+        }
+
+        $result->update(['answers' => $answers]);
+
+        return __("You have answered all the questions.")."\r\n\r\n".__("Your results will be considered.");
+    }
+
+    /**
      * @param QuestionValidatedDTO $dto
      * @return void
      * @throws \Throwable
@@ -194,35 +231,24 @@ class QuestionService
     {
         \DB::transaction(function () use ($dto) {
             $data = [
+                'title' => 'Question',
                 'olympiad_id' => $dto->olympiad_id,
                 'type' => $dto->question_type,
-                'title' => $dto->title,
                 'correct_answer_cost' => $dto->correct_answer_cost,
-                'wrong_answer_cost' => $dto->wrong_answer_cost
+                'wrong_answer_cost' => $dto->wrong_answer_cost,
             ];
 
-            if ((int)$dto->question_type === Question::TYPE_TEXT) {
-                $data['content'] = preg_replace('/\s+/', ' ', $dto->question_content_text);
-            } elseif ((int)$dto->question_type === Question::TYPE_IMAGE) {
-                $image = !is_null($dto->question_content_image)
-                    ? $this->uploadImage($dto->question_content_image, encodeTo: 'webp')
-                    : $dto->current_image;
+            $file = !is_null($dto->question_content_document)
+                ? $this->uploadFile($dto->question_content_document)
+                : $dto->current_file;
 
-                $data['content'] = $image;
-            } else {
-                $file = !is_null($dto->question_content_document)
-                    ? $this->uploadFile($dto->question_content_document)
-                    : $dto->current_file;
-
-                $data['content'] = $file;
-            }
+            $data['content'] = $file;
 
             $question = Question::updateOrCreate(['id' => $dto->id], $data);
 
             foreach ($dto->variants as $id => $variant) {
-                $question->answers()->updateOrCreate(['id' => $id], [
-                    'answer' => $variant,
-                    'is_correct' => $id === (int)$dto->correct_answer
+                $question->answers()->updateOrCreate(['question_number' => $id], [
+                    'answer' => $variant
                 ]);
             }
         });

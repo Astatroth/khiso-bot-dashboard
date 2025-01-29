@@ -29,6 +29,10 @@
                     </div>
                 </div>
             </template>
+            <template #period="{ row }">
+                <p class="m-0"><strong>{{ $t('Starts at') }}</strong> {{ row.starts_at.since }}</p>
+                <p class="m-0"><strong>{{ $t('Ends at') }}</strong> {{ row.ends_at.until }}</p>
+            </template>
             <template #status="{ row }">
                 <span :class="'badge text-bg-' + row.status.style">
                     {{ row.status.label }}
@@ -36,8 +40,8 @@
             </template>
             <template v-slot:actions="{ row }">
                 <a v-if="row.editingAllowed" class="btn text-warning me-2"
-                   :href="routeEdit.replace(':id/edit', row.id + '/question/list')"
-                   :title="$t('Questions')">
+                   :href="routeEdit.replace(':id/edit', row.id + '/question')"
+                   :title="$t('Question')">
                     <i class="fa-duotone fa-question"></i>
                 </a>
                 <a v-if="row.resultsAvailable" class="btn text-success"
@@ -108,6 +112,11 @@ export default {
                     name: this.$t('Title'),
                     slug: 'title',
                     sortable: true
+                },
+                {
+                    name: this.$t('Period'),
+                    slug: 'period',
+                    sortable: false
                 },
                 {
                     name: this.$t('Status'),

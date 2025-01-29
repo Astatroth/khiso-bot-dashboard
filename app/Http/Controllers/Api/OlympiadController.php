@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\DTOs\Olympiad\OlympiadDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\OlympiadSignUpRequest;
 use App\Http\Requests\RegisterAnswerRequest;
@@ -42,6 +43,7 @@ class OlympiadController extends ApiController
             return $this->json([]);
         }
 
+        $olympiad = $this->olympiadService->find($olympiadId);
         $result = $this->olympiadService->getResults($olympiadId, $studentId);
         $question = $this->questionService->getQuestionByNumber($olympiadId, $questionNumber, $result);
 
@@ -52,16 +54,17 @@ class OlympiadController extends ApiController
         }
 
         return $this->json([
+            'olympiad' => (new OlympiadDTO())->transform($olympiad),
             'question' => $question
         ]);
     }
 
     public function registerAnswer(RegisterAnswerRequest $request): JsonResponse
     {
-        $result = $this->questionService->registerAnswer(
-            $request->question_id,
-            $request->answer_id,
-            $request->student_id
+        $result = $this->questionService->registerAnswers(
+            $request->olympiad_id,
+            $request->student_id,
+            $request->answers
         );
 
         if ($result !== true) {

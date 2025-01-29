@@ -71,18 +71,15 @@ class OlympiadService
     public function calculateScore(int $id)
     {
         $olympiad = $this->find($id);
-        $questionService = new QuestionService();
+        $question = $olympiad->question;
 
         foreach ($olympiad->results as $result) {
             $score = 0;
-            $maxScore = $olympiad->questions()->sum('correct_answer_cost');
+            $maxScore = $question->correct_answer_cost * $question->answers->count();
 
             if (!is_null($result->answers)) {
-                foreach ($result->answers as $questionId => $answerId) {
-                    $question = $questionService->find($questionId);
-                    $answer = $question->answers->where('id', $answerId)->first();
-
-                    if ($answer->is_correct) {
+                foreach ($result->answers as $answer) {
+                    if ($question->answers[$answer['question_number'] - 1]->answer === $answer['answer']) {
                         $score += $question->correct_answer_cost;
                     } else {
                         $score += $question->wrong_answer_cost;
@@ -147,7 +144,7 @@ class OlympiadService
      */
     public function find(?int $id): ?Olympiad
     {
-        return Olympiad::with('questions', 'results')->find($id);
+        return Olympiad::with('question', 'results')->find($id);
     }
 
     /**
@@ -252,7 +249,7 @@ class OlympiadService
     {
         $result = Olympiad::where('status', Olympiad::STATUS_CREATED)
                            ->where('starts_at', '<=', now())
-                           ->whereHas('questions')
+                           ->whereHas('question')
                            ->first();
 
         return $result;
@@ -274,6 +271,15 @@ class OlympiadService
     public function isEditingAllowed(int $status): bool
     {
         return $status === Olympiad::STATUS_CREATED;
+    }
+
+    /**
+     * @param int $status
+     * @return bool
+     */
+    public function isViewingAllowed(int $status): bool
+    {
+        return $status > Olympiad::STATUS_CREATED;
     }
 
     /**

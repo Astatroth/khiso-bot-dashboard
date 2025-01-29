@@ -22,8 +22,8 @@
       "assets/css/News-DDDlWieP.css"
     ]
   },
-  "_Olympiad-DCgv7EXc.js": {
-    "file": "assets/js/Olympiad-DCgv7EXc.js",
+  "_Olympiad-B8cRz6Es.js": {
+    "file": "assets/js/Olympiad-B8cRz6Es.js",
     "name": "Olympiad",
     "imports": [
       "_News-BZBekMl9.js",
@@ -136,14 +136,14 @@
     "src": "resources/fonts/Ubuntu-Regular.ttf"
   },
   "resources/js/Vue/vue.js": {
-    "file": "assets/js/vue-CN180Tl4.js",
+    "file": "assets/js/vue-BE8rB-Lc.js",
     "name": "vue",
     "src": "resources/js/Vue/vue.js",
     "isEntry": true,
     "imports": [
       "_Artisan-CHLSoHl4.js",
       "_News-BZBekMl9.js",
-      "_Olympiad-DCgv7EXc.js",
+      "_Olympiad-B8cRz6Es.js",
       "_Seo-hMiPm0X-.js",
       "_Student-DOAFyLLQ.js",
       "_Telegram-B-5mpWnU.js",

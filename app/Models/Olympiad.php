@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
@@ -130,9 +131,9 @@ class Olympiad extends Model implements HasInlineReplyMarkupInterface, HasAdjust
     /**
      * @return HasMany
      */
-    public function questions(): HasMany
+    public function question(): HasOne
     {
-        return $this->hasMany(Question::class, 'olympiad_id');
+        return $this->hasOne(Question::class, 'olympiad_id');
     }
 
     /**

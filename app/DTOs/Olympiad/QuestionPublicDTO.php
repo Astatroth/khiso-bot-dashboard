@@ -36,8 +36,6 @@ class QuestionPublicDTO extends ValidatedDTO
     {
         $this->parseAttributes($model, $protected);
 
-        $this->parseRelation($model, 'answers', AnswerDTO::class);
-
         if ($model->type !== $model::TYPE_TEXT) {
             $this->parseFiles($model, 'content');
             $this->content = $this->content->url;
@@ -45,11 +43,8 @@ class QuestionPublicDTO extends ValidatedDTO
             $this->content = (new MessageService())->sanitizeContent($this->content);
         }
 
-        $this->answers->map(function ($item) {
-            unset($item->is_correct);
-        });
-
         $this->type_label = (new QuestionService())->getRawTypes()[$this->type];
+        $this->answers_count = $model->answers()->count();
 
         return $this;
     }

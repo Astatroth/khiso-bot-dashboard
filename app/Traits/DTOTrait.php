@@ -107,7 +107,9 @@ trait DTOTrait
         $this->{$attribute} = (object)[
             'raw' => $value,
             'date' => $value->format(config('app.locale_settings.date_format')),
-            'formatted' => $value->format(config('app.locale_settings.datetime_format'))
+            'formatted' => $value->format(config('app.locale_settings.datetime_format')),
+            'since' => $value->format('H:i d.m.Y'),
+            'until' => $value->format('H:i d.m.Y'),
         ];
     }
 

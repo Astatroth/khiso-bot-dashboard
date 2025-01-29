@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\DTOs\Olympiad\QuestionDTO;
 use App\DTOs\Olympiad\QuestionValidatedDTO;
 use App\Http\Requests\DeleteQuestionRequest;
+use App\Models\Olympiad;
 use App\Services\OlympiadService;
 use App\Services\QuestionService;
 use App\Traits\DynamicTableTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class QuestionController extends Controller
 {
@@ -25,67 +27,40 @@ class QuestionController extends Controller
     }
 
     /**
-     * @param DeleteQuestionRequest $request
-     * @return JsonResponse
-     */
-    public function ajaxDelete(DeleteQuestionRequest $request): JsonResponse
-    {
-        $this->service->delete($request->id);
-
-        return response()->json([
-            'message' => __('status.deleted')
-        ]);
-    }
-
-    /**
      * @param QuestionValidatedDTO $dto
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Throwable
      */
     public function save(QuestionValidatedDTO $dto)
     {
+        $olympiad = $this->olympiadService->find($dto->olympiad_id);
+        if ($olympiad->status !== Olympiad::STATUS_CREATED) {
+            throw ValidationException::withMessages([__('You cannot edit a question from an active olympiad.')]);
+        }
+
         $this->service->save($dto);
 
         $this->success(__('status.saved'));
 
-        return redirect()->route('admin.olympiad.question.list', $dto->olympiad_id);
-    }
-
-    /**
-     * @param int      $olympiadId
-     * @param int|null $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function showForm(int $olympiadId, int $id = null)
-    {
-        $entry = $this->service->find($id);
-
-        $this->ensureEntityExists($id, $entry);
-
-        $this->title(is_null($id) ? __('Adding a question') : __('Editing a question'));
-
-        $this->view('dashboard.olympiads.questions.edit');
-
-        if (!is_null($entry)) {
-            $entry = $entry ? (new QuestionDTO())->transform($entry) : null;
-        }
-
-        $types = $this->service->getTypes();
-
-        return $this->render(compact('entry', 'olympiadId', 'types'));
+        return redirect()->route('admin.olympiad.list');
     }
 
     /**
      * @param int $olympiadId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function showList(int $olympiadId)
+    public function showForm(int $olympiadId)
     {
         $olympiad = $this->olympiadService->find($olympiadId);
+        $entry = $olympiad->question;
+        if (!is_null($entry)) {
+            $entry = $entry ? (new QuestionDTO())->transform($entry) : null;
+        }
 
-        $this->title(__("Questions for \":olympiad\" olympiad", ['olympiad' => $olympiad->title]));
+        $this->title(__('":olympiad_name" olympiad question', ['olympiad_name' => $olympiad->title]));
 
-        $this->view('dashboard.olympiads.questions.list');
+        $this->view('dashboard.olympiads.question.edit');
 
-        return $this->render(compact('olympiad'));
+        return $this->render(compact('entry', 'olympiad'));
     }
 }

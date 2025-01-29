@@ -22,9 +22,9 @@ class RegisterAnswerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'question_id' => 'required|integer|exists:questions,id',
-            'answer_id' => 'required|integer|exists:answers,id',
-            'student_id' => 'required|integer|exists:students,id'
+            'olympiad_id' => 'required|integer|exists:olympiads,id',
+            'student_id' => 'required|integer|exists:students,id',
+            'answers' => 'required|array|min:1'
         ];
     }
 }
