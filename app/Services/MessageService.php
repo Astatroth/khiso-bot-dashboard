@@ -148,6 +148,8 @@ class MessageService
             ]);
         }
 
+        \Log::debug(json_encode($message));
+
         try {
             switch ($message->message_type) {
                 case PostMessage::TYPE_PHOTO:
