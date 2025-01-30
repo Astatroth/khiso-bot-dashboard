@@ -92,6 +92,26 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        @foreach ($answers as $index => $answer)
+                            <div class="col-lg-2 col-md-2 col-sm-12 mb-3">
+                                <div @class(["card card-outline", "card-success" => $answer['is_correct'], "card-danger" => !$answer['is_correct']])>
+                                    <div class="card-body">
+                                        <p class="fw-bold">{{ __('Question #:question_number', ['question_number' => $index + 1]) }}</p>
+                                        <p class="fw-bold">
+                                            {{ __('Answer:') }} <span @class(['text-success' => $answer['is_correct'], 'text-danger' => !$answer['is_correct']])>
+                                                {{ $answer['user_answer'] }}
+                                                @if (!$answer['is_correct'])
+                                                    ({{ $answer['correct_answer'] }})
+                                                @endif
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </x-slot:body>
 
                 <x-slot:footer>

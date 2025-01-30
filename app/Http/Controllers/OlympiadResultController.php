@@ -58,8 +58,18 @@ class OlympiadResultController extends Controller
         $this->view('dashboard.olympiads.results.view');
 
         $entry = (new ResultDTO())->transform($result);
+        $olympiad = (new OlympiadService())->find($entry->olympiad_id);
+        $correctAnswers =  $olympiad->question->answers->map(fn ($i) => ['question_number' => $i->question_number, 'answer' => $i->answer])->toArray();
+        $answers = [];
+        foreach ($correctAnswers as $index => $correctAnswer) {
+            $answers[$index] = [
+                'user_answer' => $entry->answers[$index]['answer'],
+                'correct_answer' =>$correctAnswer['answer'],
+                'is_correct' => $entry->answers[$index]['answer'] == $correctAnswer['answer']
+            ];
+        }
 
-        return $this->render(compact('entry', 'olympiadId'));
+        return $this->render(compact('answers', 'entry', 'olympiadId'));
     }
 
     /**

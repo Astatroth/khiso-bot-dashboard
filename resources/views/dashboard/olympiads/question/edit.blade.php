@@ -101,6 +101,7 @@
                                                 <option value="B">B</option>
                                                 <option value="C">C</option>
                                                 <option value="D">D</option>
+                                                <option value="E">E</option>
                                             </select>
                                         </label>
                                         <button type="button" class="btn btn-danger remove-question">
@@ -118,6 +119,7 @@
                                                     <option value="B">B</option>
                                                     <option value="C">C</option>
                                                     <option value="D">D</option>
+                                                    <option value="E">E</option>
                                                 </select>
                                             </label>
                                         </div>
@@ -132,6 +134,7 @@
                                                         <option value="B" @selected($answer->answer === 'B')>B</option>
                                                         <option value="C" @selected($answer->answer === 'C')>C</option>
                                                         <option value="D" @selected($answer->answer === 'D')>D</option>
+                                                        <option value="E" @selected($answer->answer === 'E')>E</option>
                                                     </select>
                                                 </label>
                                             </div>
