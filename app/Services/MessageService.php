@@ -76,9 +76,6 @@ class MessageService
                 $type = PostMessage::TYPE_PHOTO;
             }
 
-            \Log::debug(json_encode($model));
-            \Log::debug($model instanceof HasInlineReplyMarkupInterface);
-
             if ($model instanceof HasInlineReplyMarkupInterface) {
                 $keyboard = $model->inlineMarkup($recipient->id);
             }
@@ -150,8 +147,6 @@ class MessageService
                 ]
             ]);
         }
-
-        \Log::debug(json_encode($message));
 
         try {
             switch ($message->message_type) {
