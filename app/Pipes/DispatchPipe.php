@@ -100,11 +100,8 @@ class DispatchPipe
      */
     protected function handleRecipients(Post $post): void
     {
-        $students = Student::where('chat_id', 162957691)->get();
-        $this->dispatchToRecipient($post, $students);
-
-        /*Student::chunkById(10, function ($students) use ($post) {
+        Student::chunkById(10, function ($students) use ($post) {
             $this->dispatchToRecipient($post, $students);
-        }, 'id');*/
+        }, 'id');
     }
 }
