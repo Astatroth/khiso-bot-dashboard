@@ -45,6 +45,6 @@ class Test extends Command
         //(new SmsService())->sendMessage('974559676', 'Test sms from TIFT Olympiad Dashboard');
 
         $service = new OlympiadService();
-        $service->calculateScore(90);
+        $service->calculateScore(91);
     }
 }

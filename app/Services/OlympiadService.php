@@ -79,6 +79,10 @@ class OlympiadService
 
             if (!is_null($result->answers)) {
                 foreach ($result->answers as $answer) {
+                    if (!isset($question->answers[$answer['question_number'] - 1])) {
+                        continue;
+                    }
+
                     if ($question->answers[$answer['question_number'] - 1]->answer === $answer['answer']) {
                         $score += $question->correct_answer_cost;
                     } else {
