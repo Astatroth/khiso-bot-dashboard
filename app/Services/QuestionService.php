@@ -5,7 +5,6 @@ namespace App\Services;
 use App\DTOs\Olympiad\QuestionDTO;
 use App\DTOs\Olympiad\QuestionPublicDTO;
 use App\DTOs\Olympiad\QuestionValidatedDTO;
-use App\Events\StudentCompletedQuizEvent;
 use App\Models\Olympiad;
 use App\Models\Question;
 use App\Traits\DynamicTableTrait;
@@ -203,9 +202,9 @@ class QuestionService
 
         $question = $olympiad->question;
         $result = $question->olympiad->results()->where('student_id', $studentId)->first();
-        if ($result->created_at->diffInMinutes(now()) >= $question->olympiad->time_limit) {
-            $olympiadService->markFinished($result->id);
+        $olympiadService->markFinished($result->id);
 
+        if ($result->created_at->diffInMinutes(now()) >= $question->olympiad->time_limit) {
             $string = __("You have exceeded the time limit of :limit minutes", [
                 'limit' => $question->olympiad->time_limit
             ]);
